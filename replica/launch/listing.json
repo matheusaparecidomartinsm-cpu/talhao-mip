@@ -1,0 +1,40 @@
+{
+  "brand_config": "replica/brand.json",
+  "google_play": {
+    "status": "alvo principal: publicar o PWA como app Android (Trusted Web Activity, via Bubblewrap ou PWABuilder)",
+    "title": "Glyma: diagnóstico da soja",
+    "short_description": "Foto da folha, resposta franca: pragas e doenças da soja, sem chute.",
+    "full_description": "O Glyma olha a foto da folha e diz o que é mais provável na sua soja e quanta certeza tem. Quando não sabe, fala, e mostra o caminho para um especialista da Agronomia olhar junto.\n\nCOMO FUNCIONA\n1. Tire a foto de uma folha, de perto, com luz do dia.\n2. Veja o resultado: o mais provável, em palavras e em porcentagem, e o que vimos na foto.\n3. Decida com calma: manejo cultural, biológico e químico, com o nível de ação da praga antes de pensar em produto.\n\nO QUE É DIFERENTE\n• Diz quando não sabe. Foto escura, planta sadia, outra cultura ou sintoma que não bate: o Glyma explica o motivo e não inventa um nome.\n• Aplicar ou não. Cada ficha traz o nível de ação. O app mostra o grupo químico e o caminho para o Agrofit, nunca dose nem loja.\n• Feito para a soja do Brasil. Fichas escritas a partir das fontes da Embrapa, em revisão pela equipe de Agronomia.\n• Sem sinal no talhão. A biblioteca abre offline e as fotos esperam na fila até a internet voltar.\n• Um alerta por dia, no máximo. Só quando o clima da sua região favorece uma doença.\n• Plano da lavoura por estádio (VE a R7) e calculadora de adubo em hectare ou alqueire.\n\nGRÁTIS E SEM ANÚNCIO\nO Glyma nasceu de um projeto acadêmico entre Engenharia de Software e Agronomia, em Cascavel (PR). Não vende produto, não tem anúncio, não cobra assinatura.\n\nIMPORTANTE\nO Glyma ajuda a olhar melhor e a decidir quando chamar alguém. Não substitui o agrônomo. Aplicação de defensivo exige receituário agronômico.\n\nPRIVACIDADE\nA localização exata da foto é apagada no próprio celular; guardamos só o município. Dá para apagar tudo pelo perfil.",
+    "category": "Educação",
+    "tags": ["agricultura", "soja"],
+    "contact_email": "a definir (e-mail próprio do projeto)",
+    "privacy_policy_url": "https://SEU-DOMINIO/privacidade",
+    "content_rating": "Livre (questionário IARC: sem violência, sem compras, sem conteúdo gerado sem moderação — a comunidade tem denúncia e moderação)",
+    "data_safety": {
+      "collected": [
+        {"type": "Fotos", "purpose": "diagnóstico e medição de precisão", "optional": false, "processor": "Anthropic (análise), Supabase (guarda)"},
+        {"type": "Localização aproximada (município)", "purpose": "clima e alertas da região", "optional": true},
+        {"type": "E-mail", "purpose": "conta e código de entrada", "optional": true},
+        {"type": "Conteúdo gerado pelo usuário (perguntas e respostas)", "purpose": "comunidade", "optional": true},
+        {"type": "Atividade no app (diagnósticos, feedback)", "purpose": "histórico e precisão", "optional": false}
+      ],
+      "shared_with_third_parties": "nenhum dado é vendido; processadores agem em nome do app (não conta como compartilhamento no formulário da Play)",
+      "encrypted_in_transit": true,
+      "deletion": "no app, em Perfil → Excluir conta e dados"
+    },
+    "screenshots": [
+      "replica/clone-screens/S03.png", "replica/clone-screens/S06.png", "replica/clone-screens/S06-nao-identificado.png",
+      "replica/clone-screens/S07.png", "replica/clone-screens/S15.png", "replica/clone-screens/S14.png"
+    ],
+    "feature_graphic": "a criar: 1024×500, a partir do brief do logo"
+  },
+  "app_store": {
+    "status": "não previsto agora: PWA embrulhado costuma ser recusado pela diretriz 4.2 (funcionalidade mínima). No iPhone, usar pelo Safari e 'Adicionar à Tela de Início'",
+    "name": "Glyma: diagnóstico da soja",
+    "subtitle": "Pragas e doenças, sem chute",
+    "promotional_text": "Foto da folha, resposta franca. Quando não sabe, o Glyma fala, e mostra o caminho para um especialista olhar junto. Grátis e sem anúncio.",
+    "keywords": "lavoura,ferrugem,percevejo,lagarta,agronomia,MIP,manejo,plantio,fungo,talhão",
+    "description": "(mesmo texto da Google Play)",
+    "review_notes": "Não precisa de conta para o fluxo principal: abra o app, toque no botão da câmera e escolha uma foto de folha. Para a comunidade, use a conta de demonstração (criar no Supabase antes de enviar)."
+  }
+}

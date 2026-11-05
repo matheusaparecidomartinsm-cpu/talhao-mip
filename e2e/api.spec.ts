@@ -46,3 +46,7 @@ test("callback de login sem código volta para entrar", async ({ request }) => {
   expect(r.status()).toBe(307);
   expect(r.headers()["location"]).toMatch(/\/entrar\?erro=link$/);
 });
+test("lista do teste sem servidor: 503 claro", async ({ request }) => {
+  const r = await request.post("/api/lista", { data: { email: "a@b.com", role: "produtor", consent: true } });
+  expect(r.status()).toBe(503);
+});

@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "Privacidade" };
 
 const PROC = [
   ["Supabase (EUA)", "banco de dados, login por e-mail e guarda das fotos"],
-  ["Vercel (EUA)", "hospedagem do app e execução do job diário"],
+  ["Vercel (EUA)", "hospedagem do app, execução do job diário e contagem de visitas sem cookies (Web Analytics)"],
   ["Anthropic (EUA)", "análise da foto para o diagnóstico; a foto é enviada sem nome nem localização"],
   ["Open-Meteo (Suíça)", "previsão do tempo; recebe só a coordenada aproximada da sede do município"],
   ["Serviço de notificação do navegador (Google, Mozilla ou Apple)", "entrega dos avisos no celular, se você ligar"],

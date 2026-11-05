@@ -100,3 +100,6 @@ do $$ begin
   raise notice 'ok: excluir conta apaga diagnósticos, plano, notificações e respostas';
 end $$;
 \echo TODOS OS TESTES DE ACESSO PASSARAM
+
+-- ── lista do teste: ninguém lê nem grava pela API pública ──
+\i waitlist_check.sql

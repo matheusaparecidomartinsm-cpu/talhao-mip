@@ -4,6 +4,7 @@ import "@fontsource-variable/archivo/wdth-italic.css";
 import "./globals.css";
 import { ServiceWorker } from "@/components/shell";
 import { AuthBootstrap } from "@/components/auth-bootstrap";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: { default: "Glyma", template: "%s · Glyma" },
@@ -20,6 +21,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <ServiceWorker />
         <AuthBootstrap />
+        {/* Vercel Web Analytics: sem cookies, sem dado pessoal; só funciona hospedado na Vercel */}
+        <Analytics />
       </body>
     </html>
   );

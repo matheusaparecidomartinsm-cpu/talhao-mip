@@ -26,6 +26,7 @@ export default function CameraPage() {
   const [phase, setPhase] = useState<Phase>({ k: "starting" });
   const [step, setStep] = useState(0);
   const [busy, setBusy] = useState(false);
+  const [fileErr, setFileErr] = useState("");
 
   const stop = () => { streamRef.current?.getTracks().forEach((t) => t.stop()); streamRef.current = null; };
 
@@ -56,14 +57,15 @@ export default function CameraPage() {
     stop();
     if (!navigator.onLine) { setPhase({ k: "queued", url }); return; }
     setPhase({ k: "analyzing", url, id, slow: false });
-    localStorage.setItem(`seen:${id}`, "1");
     processQueue();
   }, []);
 
   const handleBlob = useCallback(async (blob: Blob) => {
-    setBusy(true);
+    setBusy(true); setFileErr("");
     try {
-      const img = await prepareImage(blob);
+      let img: PreparedImage;
+      try { img = await prepareImage(blob); }
+      catch { setFileErr("Esse arquivo não parece uma foto. Escolha uma imagem JPEG, PNG ou WebP."); return; }
       const url = URL.createObjectURL(img.blob);
       if (img.stats.brightness < 0.16) { stop(); setPhase({ k: "dark", img, url }); return; }
       await submit(img, url);
@@ -195,6 +197,9 @@ export default function CameraPage() {
         </div>
       )}
 
+      {fileErr && (
+        <p role="alert" className="relative z-10 mx-4 mt-4 rounded-md bg-danger-soft p-3 text-sm font-semibold text-danger">{fileErr}</p>
+      )}
       <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-around p-6 pb-[calc(24px+env(safe-area-inset-bottom))]">
         <button onClick={() => fileRef.current?.click()} aria-label="Escolher foto da galeria" className="grid size-14 place-items-center rounded-full bg-surface-inverse/70">
           <ImageIcon aria-hidden />

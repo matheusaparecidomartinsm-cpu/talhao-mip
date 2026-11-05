@@ -16,8 +16,6 @@ export function AlertRow({ a, name, unread }: { a: DiseaseAlert; name: string; u
   return (
     <Link
       href={`/alertas#${a.id}`}
-      suppressHydrationWarning
-      aria-label={`Risco ${RISK_LABEL[a.risk]} de ${name} em ${a.municipio}, ${relTime(a.createdAt)}`}
       className={cx("flex items-center gap-3 border-b border-border p-3 last:border-b-0", unread ? "bg-danger-soft" : "hover:bg-surface-sunken")}
     >
       <span className={cx("grid size-12 shrink-0 place-items-center rounded-sm border",
@@ -25,10 +23,10 @@ export function AlertRow({ a, name, unread }: { a: DiseaseAlert; name: string; u
         <TriangleAlert className="size-5" aria-hidden />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block font-semibold text-ink">{name}</span>
+        <span className="block font-semibold text-ink">{name}<span className="sr-only"> em {a.municipio}</span></span>
         <span className="block truncate text-sm text-text-muted">Risco {RISK_LABEL[a.risk]}: {a.reason}</span>
       </span>
-      <time suppressHydrationWarning dateTime={a.createdAt} className="self-start text-xs text-text-subtle">{relTime(a.createdAt)}</time>
+      <time suppressHydrationWarning dateTime={a.createdAt} className="self-start text-xs text-text-muted">{relTime(a.createdAt)}</time>
     </Link>
   );
 }
@@ -60,7 +58,7 @@ export function WeatherTable({ days }: { days: (WeatherDay & { spray: SprayVerdi
   const wk = (d: string, i: number) => i === 0 ? "Hoje" : new Date(d + "T12:00:00").toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "");
   const maxRain = Math.max(10, ...days.map((d) => d.rainMm));
   return (
-    <div className="scroll-x">
+    <div className="scroll-x" tabIndex={0} role="region" aria-label="Previsão do tempo (role para o lado)">
       <table className="w-full min-w-[480px] border-collapse text-center text-sm">
         <caption className="sr-only">Previsão para os próximos {days.length} dias e condição para pulverizar</caption>
         <thead>

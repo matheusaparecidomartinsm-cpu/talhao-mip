@@ -118,7 +118,7 @@ export default function DiagnosisPage({ params }: { params: Promise<{ id: string
         <div className="md:grid md:grid-cols-[1fr_1.2fr] md:gap-8">
           <section aria-label="Fotos">
             <div
-              className="scroll-x flex gap-2"
+              className="scroll-x flex gap-2" tabIndex={0} role="region" aria-label="Fotos (role para o lado)"
               onScroll={(e) => { const el = e.currentTarget; setSlide(Math.round(el.scrollLeft / (el.clientWidth * 0.86))); }}
             >
               {slides.map((s, i) => (

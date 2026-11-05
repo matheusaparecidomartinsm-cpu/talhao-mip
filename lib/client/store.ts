@@ -29,12 +29,24 @@ export async function updateDiagnosis(id: string, patch: Partial<StoredDiagnosis
 
 let running = false;
 /** Envia o que está na fila. Idempotente: o servidor usa o id do cliente. */
-export async function processQueue() {
+export async function processQueue(): Promise<void> {
   if (running || !navigator.onLine) return;
+  // Várias abas abertas: só uma processa a fila por vez.
+  if (navigator.locks?.request) {
+    await navigator.locks.request("talhao-queue", { ifAvailable: true }, async (lock) => { if (lock) await drain(); });
+    return;
+  }
+  await drain();
+}
+
+async function drain() {
+  if (running) return;
   running = true;
   try {
     const pending = (await listDiagnoses()).filter((d) => d.status === "queued" || d.status === "pending");
-    for (const d of pending) {
+    for (const item of pending) {
+      const d = await getDiagnosis(item.id);          // outra aba pode ter concluído
+      if (!d || !(d.status === "queued" || d.status === "pending")) continue;
       await updateDiagnosis(d.id, { status: "pending" });
       try {
         const body = new FormData();

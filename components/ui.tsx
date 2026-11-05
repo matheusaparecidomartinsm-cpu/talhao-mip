@@ -126,7 +126,7 @@ export function SectionTitle({ children, action }: { children: ReactNode; action
 export function LeafPhoto({ hue, className, label }: { hue: number; className?: string; label: string }) {
   return (
     <div
-      role="img" aria-label={label}
+      {...(label ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
       className={cx("leaf-ph", className)}
       style={{ ["--h" as string]: hue }}
     />

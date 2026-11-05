@@ -32,7 +32,7 @@ self.addEventListener("fetch", (e) => {
   } else {
     e.respondWith(fetch(e.request).then((res) => {
       const copy = res.clone(); caches.open(VERSION).then((c) => c.put(e.request, copy)); return res;
-    }).catch(() => caches.match(e.request).then((hit) => hit || caches.match("/"))));
+    }).catch(() => caches.match(e.request).then((hit) => hit || (e.request.mode === "navigate" ? caches.match("/") : Response.error()))));
   }
 });
 

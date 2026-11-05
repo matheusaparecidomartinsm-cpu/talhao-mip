@@ -9,7 +9,7 @@ import { getDiagnosis, processQueue, QUEUE_EVENT, updateDiagnosis } from "@/lib/
 import { problemBySlug } from "@/lib/data/seed-problems";
 import type { Diagnosis } from "@/lib/data/types";
 
-type D = Diagnosis & { image: Blob };
+type D = Diagnosis & { image: Blob; error?: string };
 
 const TIPS = ["Uma folha só, bem de perto", "Luz do dia, sem sombra em cima", "Mostre o lado com o sintoma"];
 
@@ -72,6 +72,7 @@ export default function DiagnosisPage({ params }: { params: Promise<{ id: string
             <p className="mt-2 font-bold text-ink">
               {d.status === "pending" ? "Analisando…" : failed ? "Não conseguimos analisar agora" : "Na fila, esperando sinal"}
             </p>
+            {failed && d.error && <p className="mt-1 text-sm text-text-muted">{d.error}</p>}
             {failed && <Button className="mt-4" onClick={() => { updateDiagnosis(d.id, { status: "queued" }).then(processQueue); }}>Tentar de novo</Button>}
           </div>
         </Page>
@@ -85,13 +86,14 @@ export default function DiagnosisPage({ params }: { params: Promise<{ id: string
       not_plant: "Não encontramos uma planta na foto.",
       wrong_crop: "Por enquanto o Talhão só reconhece soja.",
       not_identified: "Os sintomas não bateram com nenhum problema da nossa biblioteca com segurança.",
+      healthy: "A planta parece sadia: não vimos sintomas na foto. Se algo te preocupa, tire uma foto mais de perto.",
     }[d.status as string] ?? "";
     return (
       <>
         <AppBar title="Resultado" back="/" />
         <Page>
           {photo}
-          <EmptyState tone="warning" icon={<ScanSearch className="size-8" />} title="Não conseguimos identificar"
+          <EmptyState tone="warning" icon={<ScanSearch className="size-8" />} title={d.status === "healthy" ? "Nenhum problema à vista" : "Não conseguimos identificar"}
             action={<>
               <ButtonLink href="/camera">Tirar outra foto</ButtonLink>
               <ButtonLink href={`/comunidade/nova?diagnostico=${d.id}`} variant="secondary">Perguntar à comunidade</ButtonLink>

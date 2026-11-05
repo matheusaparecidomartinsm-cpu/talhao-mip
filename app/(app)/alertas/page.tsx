@@ -4,6 +4,7 @@ import { PROBLEMS } from "@/lib/data/seed-problems";
 import { AlertsClient } from "./client";
 
 export const metadata: Metadata = { title: "Alertas" };
+export const revalidate = 600;
 export default async function Alerts() {
   const alerts = await listAlerts();
   const names = Object.fromEntries(PROBLEMS.map((p) => [p.slug, { name: p.commonName, hue: p.hue }]));

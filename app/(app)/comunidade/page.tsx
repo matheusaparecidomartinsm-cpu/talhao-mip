@@ -4,6 +4,7 @@ import { listPosts } from "@/lib/data";
 import { Feed } from "./feed";
 
 export const metadata: Metadata = { title: "Comunidade" };
+export const revalidate = 30;
 
 export default async function Community() {
   const posts = await listPosts("soja");

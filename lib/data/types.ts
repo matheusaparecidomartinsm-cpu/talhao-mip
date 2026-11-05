@@ -38,7 +38,7 @@ export type Problem = {
 };
 
 export type DiagnosisStatus =
-  | "pending" | "queued" | "ok" | "not_identified" | "bad_image" | "wrong_crop" | "not_plant" | "failed";
+  | "pending" | "queued" | "ok" | "not_identified" | "bad_image" | "wrong_crop" | "not_plant" | "healthy" | "failed";
 
 export type Candidate = { problemSlug: string; probability: number; reasoning: string };
 
@@ -64,6 +64,7 @@ export type Post = {
   createdAt: string;
   answers: Answer[];
   diagnosisId?: string;
+  imageUrl?: string;
 };
 
 export type Answer = {

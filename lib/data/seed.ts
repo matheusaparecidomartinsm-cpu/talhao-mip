@@ -84,10 +84,11 @@ export const FERTILIZER_RULES: FertilizerRule[] = [
 
 // Municípios de exemplo (oeste do PR). Versão real: lista completa do IBGE.
 export const MUNICIPIOS = [
-  { ibge: "4104808", nome: "Cascavel", uf: "PR" },
-  { ibge: "4127700", nome: "Toledo", uf: "PR" },
-  { ibge: "4117909", nome: "Palotina", uf: "PR" },
-  { ibge: "4115200", nome: "Marechal Cândido Rondon", uf: "PR" },
-  { ibge: "4103453", nome: "Cafelândia", uf: "PR" },
-  { ibge: "4108304", nome: "Foz do Iguaçu", uf: "PR" },
+  // coordenadas aproximadas da sede (usadas só para a previsão do tempo)
+  { ibge: "4104808", nome: "Cascavel", uf: "PR", lat: -24.956, lng: -53.455 },
+  { ibge: "4127700", nome: "Toledo", uf: "PR", lat: -24.725, lng: -53.741 },
+  { ibge: "4117909", nome: "Palotina", uf: "PR", lat: -24.287, lng: -53.840 },
+  { ibge: "4115200", nome: "Marechal Cândido Rondon", uf: "PR", lat: -24.556, lng: -54.057 },
+  { ibge: "4103453", nome: "Cafelândia", uf: "PR", lat: -24.619, lng: -53.321 },
+  { ibge: "4108304", nome: "Foz do Iguaçu", uf: "PR", lat: -25.547, lng: -54.588 },
 ];

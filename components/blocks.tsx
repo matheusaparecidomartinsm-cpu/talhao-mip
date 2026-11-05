@@ -37,7 +37,10 @@ export function PostCard({ p, isNew }: { p: Post; isNew?: boolean }) {
   const hasExpert = p.answers.some((a) => a.isExpert);
   return (
     <Link href={`/comunidade/${p.id}`} className={cx("flex gap-3 border-b border-border p-3 last:border-b-0", isNew ? "bg-success-soft" : "hover:bg-surface-sunken")}>
-      <span className="leaf-ph size-14 shrink-0 rounded-sm" style={{ ["--h" as string]: p.hue }} aria-hidden />
+      {p.imageUrl
+        // eslint-disable-next-line @next/next/no-img-element
+        ? <img src={p.imageUrl} alt="" className="size-14 shrink-0 rounded-sm object-cover" loading="lazy" />
+        : <span className="leaf-ph size-14 shrink-0 rounded-sm" style={{ ["--h" as string]: p.hue }} aria-hidden />}
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-semibold text-ink">Soja · {p.municipio}</span>
         <span className="line-clamp-2 block font-semibold">{p.title}</span>

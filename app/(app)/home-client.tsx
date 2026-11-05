@@ -16,12 +16,14 @@ type Props = {
   problems: Record<string, { name: string; hue: number }>;
 };
 
-export function HomeClient({ alerts, weather, tips, problems }: Props) {
+export function HomeClient({ alerts, weather: sampleWeather, tips, problems }: Props) {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [weather, setWeather] = useState(sampleWeather);
   useEffect(() => {
     const p = getProfile();
     if (!p.onboarded) { location.replace("/boas-vindas"); return; }
     setProfile(p);
+    if (p.municipio) fetch(`/api/clima?m=${encodeURIComponent(p.municipio)}`).then((r) => r.ok ? r.json() : null).then((j) => j?.days?.length && setWeather(j.days)).catch(() => {});
   }, []);
 
   if (!profile) {

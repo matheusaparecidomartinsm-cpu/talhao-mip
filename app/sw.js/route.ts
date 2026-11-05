@@ -35,6 +35,22 @@ self.addEventListener("fetch", (e) => {
     }).catch(() => caches.match(e.request).then((hit) => hit || caches.match("/"))));
   }
 });
+
+// Notificações (alertas da região e respostas)
+self.addEventListener("push", (e) => {
+  let d = {}; try { d = e.data ? e.data.json() : {}; } catch {}
+  e.waitUntil(self.registration.showNotification(d.title || "Talhão", {
+    body: d.body || "", icon: "/icon.svg", badge: "/icon.svg", tag: d.tag || "talhao", data: { url: d.url || "/" },
+  }));
+});
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || "/";
+  e.waitUntil(self.clients.matchAll({ type: "window" }).then((ws) => {
+    const w = ws.find((c) => new URL(c.url).origin === location.origin);
+    return w ? (w.navigate(url), w.focus()) : self.clients.openWindow(url);
+  }));
+});
 `.replace("__V__", VERSION).replace("__LIST__", JSON.stringify(LIST));
 
 export function GET() {

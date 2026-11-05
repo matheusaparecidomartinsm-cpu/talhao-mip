@@ -5,7 +5,7 @@
 import { createStore, get, set, values, del } from "idb-keyval";
 import type { Diagnosis, Post } from "@/lib/data/types";
 
-type StoredDiagnosis = Diagnosis & { image: Blob; stats?: unknown };
+type StoredDiagnosis = Diagnosis & { image: Blob; stats?: unknown; error?: string };
 
 const db = () => createStore("talhao", "diagnoses");
 const postsDb = () => createStore("talhao-posts", "posts");
@@ -37,13 +37,16 @@ export async function processQueue() {
     for (const d of pending) {
       await updateDiagnosis(d.id, { status: "pending" });
       try {
-        const res = await fetch("/api/diagnoses", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ id: d.id, cropSlug: d.cropSlug, stats: d.stats, capturedAt: d.capturedAt }),
-        });
+        const body = new FormData();
+        body.set("meta", JSON.stringify({ id: d.id, cropSlug: d.cropSlug, stats: d.stats, capturedAt: d.capturedAt }));
+        body.set("image", d.image, `${d.id}.jpg`);
+        const res = await fetch("/api/diagnoses", { method: "POST", body });
+        const r = await res.json().catch(() => ({}));
+        if (res.status === 429 || res.status === 413 || res.status === 415 || res.status === 400) {
+          await updateDiagnosis(d.id, { status: "failed", error: r.error ?? "Não foi possível analisar" });
+          continue;
+        }
         if (!res.ok) throw new Error(String(res.status));
-        const r = await res.json();
         await updateDiagnosis(d.id, { status: r.status, candidates: r.candidates, model: r.model });
       } catch {
         await updateDiagnosis(d.id, { status: navigator.onLine ? "failed" : "queued" });

@@ -1,5 +1,5 @@
 feature,area,priority,original,clone,notes
-Diagnóstico por foto (câmera),diagnóstico,must,yes,partial,S04-S06; loop central; meta 3 toques e <=3 s; fluxo completo funciona; diagnóstico é heurística de DEMONSTRAÇÃO até o /replica-backend ligar o modelo de visão
+Diagnóstico por foto (câmera),diagnóstico,must,yes,partial,backend pronto com Claude visão (testado com cliente falso); vira yes quando a chave estiver configurada e o acerto for medido
 Escolher foto da galeria,diagnóstico,must,yes,yes,S04
 Seleção da cultura antes do diagnóstico,diagnóstico,must,yes,partial,S04; no MVP só soja (pré-selecionada); fixo em soja (única cultura ativa); seletor aparece como rótulo
 Lista de candidatos com probabilidade,diagnóstico,must,yes,yes,S06; API retorna probabilidade por problema; principal + 'também pode ser'
@@ -17,16 +17,16 @@ Outros problemas desta cultura,biblioteca,should,yes,yes,S07 rodapé
 Onboarding idioma e permissões,onboarding,should,inferred,partial,"S01; MVP só pt-BR; 3 passos (apresentação, culturas, município + consentimento de alertas); só pt-BR"
 Escolher minhas culturas,onboarding,should,inferred,yes,S02
 Uso como convidado (sem cadastro),onboarding,must,yes,yes,primeiro uso sem registro; perfil e dados no aparelho
-Conta/login opcional,conta,should,inferred,no,S18; necessário para comunidade e histórico na nuvem; tela pronta com 'em breve'; depende do Supabase Auth
-Excluir meus dados,conta,should,yes,yes,"Play Store data safety; LGPD; apaga perfil, diagnósticos e perguntas do aparelho"
+Conta/login opcional,conta,should,inferred,yes,convidado anônimo + e-mail com código; liga o e-mail sem perder histórico (falta testar no projeto real)
+Excluir meus dados,conta,should,yes,yes,"exclui conta, fotos e dados no servidor (cascata testada)"
 Início com culturas/alerta/clima/dica,início,must,inferred,yes,S03
-Comunidade: feed de perguntas,comunidade,should,yes,partial,S10; perguntas de exemplo + as criadas no aparelho; sem servidor
-Comunidade: nova pergunta com foto,comunidade,should,yes,partial,S11; anexa foto do diagnóstico (F03); anexa a foto do diagnóstico; fica só no aparelho
-Comunidade: respostas e selo de especialista,comunidade,should,yes,partial,S12; semear com turma de Agronomia; responder e selo funcionam localmente
-Comunidade: curtir e denunciar,comunidade,could,inferred,partial,S12; moderação; 'útil' funciona; denunciar ainda não
-Alertas de doença na região,alertas,should,yes,partial,"S13; regra clima + diagnósticos próprios; tela e regras visuais prontas; dados de exemplo, sem job diário"
-Notificações push,alertas,should,yes,no,FCM no original; Web Push no clone; limitar frequência; depende do backend (Web Push + VAPID)
-Clima agrícola com janela de pulverização,clima,should,yes,partial,S14; API de clima pública; regra de pulverização real; previsão de exemplo até ligar o Open-Meteo
+Comunidade: feed de perguntas,comunidade,should,yes,yes,Supabase com RLS; modo local continua sem backend
+Comunidade: nova pergunta com foto,comunidade,should,yes,yes,anexa a foto do diagnóstico (copiada para bucket público)
+Comunidade: respostas e selo de especialista,comunidade,should,yes,yes,"selo só para especialista verificado, preenchido pelo banco"
+Comunidade: curtir e denunciar,comunidade,could,inferred,yes,curtir com trava de duplicidade; denúncia com motivo; moderação por papel
+Alertas de doença na região,alertas,should,yes,yes,job diário com regras por clima e casos; regras a revisar pela Agronomia
+Notificações push,alertas,should,yes,yes,"Web Push com VAPID, teto de 1 alerta por dia, respostas da comunidade"
+Clima agrícola com janela de pulverização,clima,should,yes,yes,Open-Meteo via job diário + /api/clima
 Calendário/plano de cultivo por fase,cultivo,could,yes,yes,"S15; estádios fenológicos da soja (VE..R8); estádios VE–R7 pela data de semeadura, com o que monitorar"
 Calculadora de adubo por área,cultivo,could,yes,yes,"S16; suportar ha e alqueire paranaense; ha, alqueire paranaense e m²; faixas de referência"
 Produtos registrados para o problema,tratamento,could,partial,partial,link Agrofit/MAPA; sem venda; link para o Agrofit; sem catálogo próprio

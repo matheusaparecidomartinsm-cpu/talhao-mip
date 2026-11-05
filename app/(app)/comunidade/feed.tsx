@@ -4,11 +4,12 @@ import { MessageCirclePlus, MessagesSquare } from "lucide-react";
 import { PostCard } from "@/components/blocks";
 import { ButtonLink, Card, EmptyState, Skeleton } from "@/components/ui";
 import { listLocalPosts } from "@/lib/client/store";
+import { backendEnabled } from "@/lib/env";
 import type { Post } from "@/lib/data/types";
 
 export function Feed({ posts }: { posts: Post[] }) {
   const [local, setLocal] = useState<Post[] | null>(null);
-  useEffect(() => { listLocalPosts().then(setLocal).catch(() => setLocal([])); }, []);
+  useEffect(() => { if (backendEnabled()) { setLocal([]); return; } listLocalPosts().then(setLocal).catch(() => setLocal([])); }, []);
   const all = [...(local ?? []), ...posts];
   return (
     <>
@@ -28,7 +29,7 @@ export function Feed({ posts }: { posts: Post[] }) {
           </EmptyState>
         ) : all.map((p) => <PostCard key={p.id} p={p} isNew={p.answers.length > 0 && Date.now() - new Date(p.answers.at(-1)!.createdAt).getTime() < 15 * 60_000} />)}
       </Card>
-      <p className="mt-3 text-xs text-text-muted">Perguntas que você fizer ficam neste aparelho até a comunidade online ser ligada.</p>
+      {!backendEnabled() && <p className="mt-3 text-xs text-text-muted">Perguntas que você fizer ficam neste aparelho até a comunidade online ser ligada.</p>}
     </>
   );
 }

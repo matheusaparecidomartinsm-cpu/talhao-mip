@@ -3,7 +3,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { AppBar, Page } from "@/components/shell";
 import { Button, Field, inputCls } from "@/components/ui";
+import Link from "next/link";
 import { getDiagnosis, getProfile, saveLocalPost } from "@/lib/client/store";
+import { backendEnabled } from "@/lib/env";
+import { createPost } from "../actions";
 import { problemBySlug } from "@/lib/data/seed-problems";
 
 function NewQuestion() {
@@ -16,6 +19,7 @@ function NewQuestion() {
   const [body, setBody] = useState("");
   const [err, setErr] = useState<{ title?: string; body?: string }>({});
   const [sending, setSending] = useState(false);
+  const [needAccount, setNeedAccount] = useState(false);
 
   useEffect(() => {
     if (!diagId) return;
@@ -33,6 +37,13 @@ function NewQuestion() {
     setErr(er);
     if (Object.keys(er).length) return;
     setSending(true);
+    if (backendEnabled()) {
+      const r = await createPost({ title, body, diagnosisId: diagId });
+      setSending(false);
+      if (!r.ok) { if (r.needAccount) setNeedAccount(true); else setErr({ title: r.error }); return; }
+      router.replace(`/comunidade/${r.id}`);
+      return;
+    }
     const id = crypto.randomUUID();
     const prof = getProfile();
     await saveLocalPost({
@@ -60,6 +71,11 @@ function NewQuestion() {
         <textarea id="corpo" rows={5} className={`${inputCls} h-auto py-3`} value={body} onChange={(e) => setBody(e.target.value)}
           aria-invalid={!!err.body} aria-describedby={err.body ? "corpo-err" : "corpo-help"} />
       </Field>
+      {needAccount && (
+        <p role="alert" className="rounded-md bg-warning-soft p-3 text-sm text-warning">
+          Para perguntar na comunidade é preciso ter conta. <Link href="/entrar" className="font-semibold underline">Entrar ou criar conta</Link> — leva 1 minuto e seus diagnósticos vão junto.
+        </p>
+      )}
       <Button type="submit" size="lg" loading={sending}>Publicar pergunta</Button>
     </form>
   );

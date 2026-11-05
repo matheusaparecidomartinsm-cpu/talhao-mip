@@ -23,17 +23,30 @@ export async function searchProblems(q: string) {
     norm(`${p.commonName} ${p.scientificName} ${p.symptoms}`).includes(n));
 }
 
+const remoteOn = () => Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SECRET_KEY);
+const remote = () => import("./remote");
+
 export async function listPosts(cropSlug?: string) {
+  if (remoteOn()) return (await remote()).remoteListPosts();
   return POSTS.filter((p) => !cropSlug || p.cropSlug === cropSlug)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
-export async function getPost(id: string) { return POSTS.find((p) => p.id === id); }
+export async function getPost(id: string) {
+  if (remoteOn()) return (await remote()).remoteGetPost(id);
+  return POSTS.find((p) => p.id === id);
+}
 
 export async function listAlerts(municipio?: string): Promise<DiseaseAlert[]> {
+  if (remoteOn()) return (await (await remote()).remoteListAlerts()).filter((a) => !municipio || a.municipio === municipio);
   return ALERTS.filter((a) => !municipio || a.municipio === municipio);
 }
 
-export async function getWeather(municipio: string): Promise<WeatherDay[]> { return weatherFor(municipio); }
+/** Previsão do município. `sample: true` quando são dados de exemplo (sem backend ou sem cache recente). */
+export async function getWeatherInfo(municipio: string): Promise<{ days: WeatherDay[]; sample: boolean }> {
+  if (remoteOn()) { const d = await (await remote()).remoteWeather(municipio); if (d?.length) return { days: d, sample: false }; }
+  return { days: weatherFor(municipio), sample: true };
+}
+export async function getWeather(municipio: string): Promise<WeatherDay[]> { return (await getWeatherInfo(municipio)).days; }
 
 export function sprayVerdict(d: WeatherDay): SprayVerdict {
   if (d.rainMm >= 5) return { ok: false, reason: "chuva" };

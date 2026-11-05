@@ -44,3 +44,9 @@ Graus-dia com fases da praga,cultivo,could,agrio,no,útil para lagartas; precisa
 Inspeção de campo com mapa e trajeto,monitoramento,could,agrio,no,casa com o mapa de talhões do protótipo Talhão
 Assistente de chat com IA,assistente,could,agrio,no,sem mascote; o robô do Agrio é deles
 Monitoramento por satélite (NDVI),monitoramento,skip,agrio,no,exige processamento de imagens Sentinel; outro projeto
+"Garantia de resposta na comunidade (fila de perguntas sem resposta para especialistas, prazo visível)",comunidade,must,no,no,fix E1 — 3 avaliações: perguntas sem resposta e feed desatualizado
+Segunda opinião de especialista em 1 toque quando o diagnóstico não é confiável,diagnóstico,must,no,partial,"fix E2 — 5 avaliações de diagnóstico errado; hoje leva à comunidade com a foto, falta fila dedicada"
+"Guia de foto antes da primeira análise (distância, luz, uma folha)",diagnóstico,should,no,partial,"fix E3 — avaliação 'di foto jarak 1 m, gak bs deteksi'; dica existe na câmera, falta tela de 1ª vez"
+Feed da comunidade com 'atualizado há X min' e recarregar,comunidade,should,no,no,fix E4 — 2 avaliações de feed atrasado 3 dias
+"Cobertura profunda da soja brasileira (12 → ~25 fichas, pragas regionais)",biblioteca,should,no,no,fix E5 — 6 avaliações de cultura/planta faltando; resposta: profundidade em vez de amplitude
+Linguagem do produtor e glossário nas fichas,biblioteca,could,no,no,fix E6 — 1 avaliação 'não entendi nada' (fraco)

@@ -1,0 +1,14 @@
+{
+  "_nota": "Palavras-chave por tema, em vários idiomas (amostra multilíngue). Tom positivo/negativo é dado por 'pos'/'neg'.",
+  "diagnóstico erra ou não identifica": ["couldn't even detect", "siempre marca error", "gak bs deteksi", "não deu o diagnóstico", "da como falta", "ليس بالحجم", "useless app"],
+  "falta cultura ou planta": ["maracujá", "ALPUKAT", "species/families", "نباتات الزينة", "18 der insgesamt 40", "citricas", "não tem suporte"],
+  "comunidade sem resposta ou desatualizada": ["comunidade está desatualizada", "comunidade não está atualizando", "não tem resposta"],
+  "notificações em excesso": ["flood of notifications", "notifications"],
+  "idioma faltando": ["deutsche Sprache", "auf englisch"],
+  "falta informação de produto/remédio": ["दवा"],
+  "recursos sociais da comunidade": ["quem nós curtiu"],
+  "difícil de entender": ["কিছু বুঝলাম না"],
+  "inconvenientes sem detalhe": ["inconvénients"],
+  "_pos": ["great app", "Muy buena", "Muy bien", "sangat membantu", "fonctionne bien", "génial", "बहुत", "নাইস", "valo", "tốt", "dự báo thời tiết cũng hay", "muito bom", "Beautifully", "Easy to use", "ممتاز", "جيد جدا", "bagus", "gute app"],
+  "_neg": ["Tệ quá", "0 estrellas", "tdk berguna", "muito fraco", "point of this app", "flood", "fehlt", "ليس", "não tem", "desatualizada", "não está atualizando", "কিছু বুঝলাম না", "दवा", "inconvénients", "kurang", "ينقصه", "لان يجيب", "only problem", "não deu"]
+}

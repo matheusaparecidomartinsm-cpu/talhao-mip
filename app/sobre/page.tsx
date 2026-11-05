@@ -160,7 +160,7 @@ export default function Landing() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-[var(--layout-wide-max)] flex-wrap items-center justify-between gap-3 px-5 py-6 text-sm text-text-muted">
           <span className="flex items-center gap-2"><GlymaMark className="size-5" />Glyma · projeto acadêmico, Cascavel (PR)</span>
-          <span className="flex gap-4"><Link className="underline" href="/privacidade">Privacidade</Link><Link className="underline" href="/biblioteca">Biblioteca</Link></span>
+          <span className="flex gap-4"><Link className="underline" href="/privacidade">Privacidade</Link><Link className="underline" href="/termos">Termos</Link><Link className="underline" href="/biblioteca">Biblioteca</Link></span>
         </div>
       </footer>
     </div>

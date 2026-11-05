@@ -19,8 +19,8 @@ W = {"must": 3, "should": 2, "could": 1}
 VAL = {"yes": 1.0, "partial": 0.5, "no": 0.0}
 ORDER = {"must": 0, "should": 1, "could": 2}
 rows = list(csv.DictReader(open(path, encoding="utf-8")))
-counted = [r for r in rows if r["priority"] in W and r["original"] != "agrio"]
-extra = [r for r in rows if r["original"] == "agrio" and r["priority"] in W]
+counted = [r for r in rows if r["priority"] in W and r["original"] not in ("agrio", "no")]
+extra = [r for r in rows if r["original"] in ("agrio", "no") and r["priority"] in W]
 skipped = [r for r in rows if r["priority"] == "skip"]
 
 def score(rs):
@@ -47,7 +47,7 @@ p = out.append
 p(f"{'## ' if md else ''}Paridade de funcionalidades: {feat:.1f}%")
 p(f"Must-haves completos: {must_done} de {len(musts)}" + ("" if must_done == len(musts) else "  →  NÃO É LANÇÁVEL enquanto faltar must-have"))
 if lay is not None: p(f"Layout (média de {len(layout)} telas): {lay:.1f}%   ·   Nota geral (80% funções + 20% layout): {overall}%")
-p(f"Linhas contadas: {len(counted)} · fora da conta: {len(skipped)} skip, {len(extra)} vindas só da referência Agrio")
+p(f"Linhas contadas: {len(counted)} · fora da conta: {len(skipped)} skip, {len(extra)} fora do original (referência Agrio ou correções próprias)")
 p("")
 p(f"{'### ' if md else ''}Por área (mais fraca primeiro)")
 if md: p("| área | nota | itens |\n| --- | ---: | ---: |")
@@ -59,6 +59,6 @@ for r in missing:
     p(f"| {r['priority']} | {r['feature']} | {r['clone']} | {r['notes']} |" if md else f"  [{r['priority']}] {r['feature']} — {r['clone']}: {r['notes']}")
 if extra:
     p("")
-    p(f"{'### ' if md else ''}Extras vindos da referência (não contam)")
+    p(f"{'### ' if md else ''}Extras fora do original: referência Agrio e correções próprias (não contam)")
     for r in extra: p(f"- {r['feature']}: {r['clone']}" if md else f"  {r['feature']}: {r['clone']}")
 print("\n".join(out))

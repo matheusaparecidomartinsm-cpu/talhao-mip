@@ -105,7 +105,7 @@ export default function ProfilePage() {
           {email && <Button variant="secondary" onClick={signOutAll}><LogOut className="size-5" aria-hidden />Sair de todos os aparelhos</Button>}
           <Button variant="danger" onClick={wipe}><Trash2 className="size-5" aria-hidden />{backend ? "Excluir conta e dados" : "Apagar meus dados"}</Button>
         </div>
-        <p className="mt-6 text-xs text-text-muted">Glyma · versão de desenvolvimento · <Link className="underline" href="/privacidade">privacidade</Link> · <Link className="underline" href="/prototipo/index.html">protótipo antigo</Link></p>
+        <p className="mt-6 text-xs text-text-muted">Glyma · versão de desenvolvimento · <Link className="underline" href="/privacidade">privacidade</Link> · <Link className="underline" href="/termos">termos</Link> · <Link className="underline" href="/prototipo/index.html">protótipo antigo</Link></p>
       </Page>
     </>
   );

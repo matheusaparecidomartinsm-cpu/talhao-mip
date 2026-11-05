@@ -56,7 +56,7 @@ Por que trocar os verdes do protótipo: o verde é a cor de quase todo app agrí
 | leaf / leaf-dark | `#5E8C30` / `#2F4A1F` | só nas ilustrações de folha |
 | success / danger / warning / info | mantidos | significados, não marca |
 
-`contrast.py`: **0 falhas** (39 pares de texto, 9 de interface). As cores do Agrio estão em `brand.json` para a varredura. As do Plantix ainda precisam ser medidas no app instalado.
+`contrast.py`: **0 falhas** (41 pares de texto, 9 de interface). As cores do Agrio estão em `brand.json` para a varredura. As do Plantix ainda precisam ser medidas no app instalado.
 
 ## 3. Brief do logo
 

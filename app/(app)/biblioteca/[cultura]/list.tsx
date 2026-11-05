@@ -11,7 +11,7 @@ export function ProblemList({ problems }: { problems: Problem[] }) {
   const shown = type === "todos" ? problems : problems.filter((p) => p.agentType === type);
   const groups = useMemo(() => {
     const g = new Map<string, Problem[]>();
-    for (const p of shown) { const L = p.commonName[0].toUpperCase(); g.set(L, [...(g.get(L) ?? []), p]); }
+    for (const p of shown) { const L = p.commonName[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase(); g.set(L, [...(g.get(L) ?? []), p]); }
     return [...g.entries()];
   }, [shown]);
   const opts: (AgentType | "todos")[] = ["todos", ...present];

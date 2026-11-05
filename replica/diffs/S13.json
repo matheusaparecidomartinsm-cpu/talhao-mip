@@ -1,0 +1,1 @@
+{"screen": "S13", "mode": "layout", "score": 28.5, "cells": 881, "differing_cells": 612, "regions_differ_px": [[0, 1054, 628, 1081, 24], [0, 210, 628, 237, 23], [0, 685, 628, 712, 23], [0, 870, 628, 896, 23], [0, 949, 628, 975, 23], [0, 237, 628, 263, 22]], "height_diff_pct": 0.0, "verdict": "different"}

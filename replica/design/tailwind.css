@@ -47,8 +47,8 @@
   --color-agent-deficiencia-fg: #3D6A1A;
   --color-agent-outro-bg: #EEF2EC;
   --color-agent-outro-fg: #4B5A50;
-  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Archivo", system-ui, sans-serif;
+  --font-sans: "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
   --text-xs: 12px;
   --text-xs--line-height: 16px;
   --text-sm: 14px;

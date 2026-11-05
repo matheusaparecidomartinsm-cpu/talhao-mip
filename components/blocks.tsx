@@ -9,12 +9,15 @@ export function WeatherIcon({ icon, className }: { icon: WeatherDay["icon"]; cla
   return <I className={className} role="img" aria-label={label} />;
 }
 
+export const RISK_LABEL = { medio: "médio", alto: "alto" } as const;
+
 export function AlertRow({ a, name, unread }: { a: DiseaseAlert; name: string; unread?: boolean }) {
   const high = a.risk === "alto";
   return (
     <Link
       href={`/alertas#${a.id}`}
-      aria-label={`Risco ${a.risk} de ${name} em ${a.municipio}, ${relTime(a.createdAt)}`}
+      suppressHydrationWarning
+      aria-label={`Risco ${RISK_LABEL[a.risk]} de ${name} em ${a.municipio}, ${relTime(a.createdAt)}`}
       className={cx("flex items-center gap-3 border-b border-border p-3 last:border-b-0", unread ? "bg-danger-soft" : "hover:bg-surface-sunken")}
     >
       <span className={cx("grid size-12 shrink-0 place-items-center rounded-sm border",
@@ -23,9 +26,9 @@ export function AlertRow({ a, name, unread }: { a: DiseaseAlert; name: string; u
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-semibold text-ink">{name}</span>
-        <span className="block truncate text-sm text-text-muted">Risco {a.risk}: {a.reason}</span>
+        <span className="block truncate text-sm text-text-muted">Risco {RISK_LABEL[a.risk]}: {a.reason}</span>
       </span>
-      <time dateTime={a.createdAt} className="self-start text-xs text-text-subtle">{relTime(a.createdAt)}</time>
+      <time suppressHydrationWarning dateTime={a.createdAt} className="self-start text-xs text-text-subtle">{relTime(a.createdAt)}</time>
     </Link>
   );
 }
@@ -43,7 +46,7 @@ export function PostCard({ p, isNew }: { p: Post; isNew?: boolean }) {
             <span aria-label={`${p.answers.length} respostas`}><MessageCircle className="inline size-3.5" aria-hidden /> {p.answers.length}</span>
           )}
           {hasExpert && <span className="font-semibold text-accent">Especialista respondeu</span>}
-          <time dateTime={p.createdAt}>{relTime(p.createdAt)}</time>
+          <time suppressHydrationWarning dateTime={p.createdAt}>{relTime(p.createdAt)}</time>
         </span>
       </span>
     </Link>

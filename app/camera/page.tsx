@@ -123,8 +123,8 @@ export default function CameraPage() {
           ) : (
             <>
               <WifiOff className="mx-auto size-10" aria-hidden />
-              <p className="mt-4 text-xl font-bold">Foto guardada na fila</p>
-              <p className="mt-2 text-sm">Você está sem sinal. Assim que a internet voltar, a gente analisa e avisa.</p>
+              <p className="mt-4 text-xl font-bold">Foto guardada</p>
+              <p className="mt-2 text-sm">Sem sinal por aqui. Quando a internet voltar, a gente analisa e avisa.</p>
               <div className="mt-5 grid gap-2">
                 <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-md bg-accent px-5 font-semibold text-on-accent">Voltar ao início</Link>
                 <button onClick={() => location.reload()} className="min-h-12 rounded-md border border-text-inverse px-5 font-semibold">Tirar outra foto</button>

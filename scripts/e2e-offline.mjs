@@ -1,7 +1,7 @@
 import { chromium } from "playwright-core";
 const b = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-await ctx.addInitScript(() => localStorage.setItem("talhao:profile", JSON.stringify({ onboarded: true, crops: ["soja"], municipio: "Cascavel" })));
+await ctx.addInitScript(() => localStorage.setItem("glyma:profile", JSON.stringify({ onboarded: true, crops: ["soja"], municipio: "Cascavel" })));
 const pg = await ctx.newPage();
 await pg.goto("http://localhost:3100/");
 await pg.evaluate(async () => { await navigator.serviceWorker.ready; });

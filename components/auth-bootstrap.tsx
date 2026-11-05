@@ -28,7 +28,7 @@ export function AuthBootstrap() {
         }
       };
       sync();
-      window.addEventListener("talhao:profile", sync);
+      window.addEventListener("glyma:profile", sync);
     })();
   }, []);
   return null;

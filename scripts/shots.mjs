@@ -12,7 +12,7 @@ const report = [];
 
 async function ctx(width, profile) {
   const c = await browser.newContext({ viewport: { width, height: width < 800 ? 844 : 900 }, deviceScaleFactor: width < 800 ? 2 : 1 });
-  if (profile) await c.addInitScript((p) => localStorage.setItem("talhao:profile", JSON.stringify(p)), profile);
+  if (profile) await c.addInitScript((p) => localStorage.setItem("glyma:profile", JSON.stringify(p)), profile);
   return c;
 }
 const PROFILE = { onboarded: true, crops: ["soja"], municipio: "Cascavel", name: "Matheus", notifyAlerts: true,
@@ -68,7 +68,7 @@ await shot(m, "S04", "/camera", { full: false, wait: "h1" });
   await pg.screenshot({ path: `${OUT}/S04-foto-escura.png` });
   await pg.getByRole("button", { name: "Enviar assim mesmo" }).click();
   await pg.waitForURL("**/diagnostico/**", { timeout: 15000 });
-  await pg.getByText("Não conseguimos identificar").waitFor();
+  await pg.getByText("Dessa vez a gente não sabe").waitFor();
   await pg.screenshot({ path: `${OUT}/S06-nao-identificado.png`, fullPage: true });
   await pg.close();
 }

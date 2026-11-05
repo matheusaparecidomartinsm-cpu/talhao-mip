@@ -14,7 +14,7 @@ const STATUS: Record<string, string> = { queued: "Na fila", pending: "Analisando
 export default function HistoryPage() {
   const [rows, setRows] = useState<Row[] | null>(null);
   useEffect(() => {
-    document.title = "Meus diagnósticos · Talhão";
+    document.title = "Meus diagnósticos · Glyma";
     const urls: string[] = [];
     listDiagnoses().then((ds) => setRows(ds.map((d) => { const url = URL.createObjectURL(d.image); urls.push(url); return { ...d, url }; })));
     return () => urls.forEach((u) => URL.revokeObjectURL(u));

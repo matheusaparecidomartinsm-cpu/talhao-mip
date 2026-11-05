@@ -37,7 +37,7 @@ export const test = base.extend<Fx>({
   withProfile: async ({ page }, use) => {
     await use(async (p = PROFILE) => {
       await page.addInitScript((prof) => {
-        if (prof && !sessionStorage.getItem("__seeded")) { localStorage.setItem("talhao:profile", JSON.stringify(prof)); sessionStorage.setItem("__seeded", "1"); }
+        if (prof && !sessionStorage.getItem("__seeded")) { localStorage.setItem("glyma:profile", JSON.stringify(prof)); sessionStorage.setItem("__seeded", "1"); }
       }, p);
     });
   },

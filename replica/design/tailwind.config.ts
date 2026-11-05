@@ -49,7 +49,9 @@ export default {
     "agent-deficiencia-bg": "var(--color-agent-deficiencia-bg)",
     "agent-deficiencia-fg": "var(--color-agent-deficiencia-fg)",
     "agent-outro-bg": "var(--color-agent-outro-bg)",
-    "agent-outro-fg": "var(--color-agent-outro-fg)"
+    "agent-outro-fg": "var(--color-agent-outro-fg)",
+    "leaf": "var(--color-leaf)",
+    "leaf-dark": "var(--color-leaf-dark)"
   },
   "fontFamily": {
     "sans": [
@@ -98,7 +100,7 @@ export default {
   "boxShadow": {
     "card": "0 1px 2px rgba(20,33,26,.06), 0 1px 1px rgba(20,33,26,.04)",
     "pop": "0 8px 24px rgba(20,33,26,.16), 0 2px 6px rgba(20,33,26,.08)",
-    "fab": "0 6px 16px rgba(63,122,29,.35)"
+    "fab": "0 6px 16px rgba(91,58,158,.35)"
   },
   "screens": {
     "sm": "480px",

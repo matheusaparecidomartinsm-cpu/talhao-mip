@@ -6,11 +6,11 @@ import { ServiceWorker } from "@/components/shell";
 import { AuthBootstrap } from "@/components/auth-bootstrap";
 
 export const metadata: Metadata = {
-  title: { default: "Talhão", template: "%s · Talhão" },
-  description: "Diagnóstico de pragas e doenças da soja pela foto, com manejo integrado.",
+  title: { default: "Glyma", template: "%s · Glyma" },
+  description: "Foto da folha, resposta franca: o que atacou sua soja, quanta certeza temos e quando vale aplicar.",
   manifest: "/manifest.webmanifest",
 };
-export const viewport: Viewport = { themeColor: "#173A2A", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#2B1E45", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

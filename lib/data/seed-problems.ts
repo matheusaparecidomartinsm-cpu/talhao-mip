@@ -1,6 +1,6 @@
 import type { Problem } from "./types";
 
-// Fichas escritas do zero para o Talhão. NENHUM texto vem do Plantix ou do Agrio.
+// Fichas escritas do zero para o Glyma, com base em fontes públicas (Embrapa, MAPA). Conteúdo próprio.
 // Status "review": precisam passar pela revisão da turma/professores de Agronomia
 // antes de virar "published". Recomendações químicas trazem só grupo de modo de
 // ação, nunca dose — dose depende de produto registrado e receituário agronômico.

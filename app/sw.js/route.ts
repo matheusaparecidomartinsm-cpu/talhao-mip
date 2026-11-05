@@ -8,10 +8,10 @@ const LIST = ["/", "/biblioteca", "/biblioteca/soja", "/manifest.webmanifest", "
   ...PROBLEMS.map((p) => `/biblioteca/soja/${p.slug}`)];
 const VERSION = String(PROBLEMS.length) + "-" + PROBLEMS.map((p) => p.slug.length).join("");
 
-const BODY = `// Service worker do Talhão (sem dependências).
+const BODY = `// Service worker do Glyma (sem dependências).
 // Biblioteca e arquivos estáticos: cache primeiro (funciona sem sinal).
 // Demais páginas: rede primeiro, cache como reserva. API: só rede.
-const VERSION = "talhao-__V__";
+const VERSION = "glyma-__V__";
 const PRECACHE = __LIST__;
 
 self.addEventListener("install", (e) => {
@@ -39,8 +39,8 @@ self.addEventListener("fetch", (e) => {
 // Notificações (alertas da região e respostas)
 self.addEventListener("push", (e) => {
   let d = {}; try { d = e.data ? e.data.json() : {}; } catch {}
-  e.waitUntil(self.registration.showNotification(d.title || "Talhão", {
-    body: d.body || "", icon: "/icon.svg", badge: "/icon.svg", tag: d.tag || "talhao", data: { url: d.url || "/" },
+  e.waitUntil(self.registration.showNotification(d.title || "Glyma", {
+    body: d.body || "", icon: "/icon.svg", badge: "/icon.svg", tag: d.tag || "glyma", data: { url: d.url || "/" },
   }));
 });
 self.addEventListener("notificationclick", (e) => {

@@ -8,7 +8,7 @@ test("F02-H1 primeira abertura até o início", async ({ page, problems, axe }) 
   await expect(page.getByRole("button", { name: /Soja/ })).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Continuar" }).click();
   await page.getByLabel("Município").selectOption("Cascavel");
-  await page.getByRole("button", { name: "Entrar no Talhão" }).click();
+  await page.getByRole("button", { name: "Entrar no Glyma" }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByText("Olá · Cascavel")).toBeVisible();
   await expect(page.getByRole("link", { name: /Ferrugem asiática em Cascavel/ })).toBeVisible();
@@ -29,7 +29,7 @@ test("F02-E2 pular município mostra estado vazio no início", async ({ page, pr
   await page.goto("/boas-vindas");
   await page.getByRole("button", { name: "Começar" }).click();
   await page.getByRole("button", { name: "Continuar" }).click();
-  await page.getByRole("button", { name: "Entrar no Talhão" }).click();
+  await page.getByRole("button", { name: "Entrar no Glyma" }).click();
   await expect(page.getByRole("heading", { name: "Informe seu município" })).toBeVisible();
   void problems;
 });

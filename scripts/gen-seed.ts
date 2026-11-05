@@ -13,7 +13,7 @@ const q = (v: unknown): string => {
 
 const out: string[] = [
   "-- GERADO por scripts/gen-seed.ts. Não editar à mão.",
-  "-- Conteúdo próprio do Talhão. Fichas publicadas com reviewed_at = null (\"em revisão\").",
+  "-- Conteúdo próprio do Glyma. Fichas publicadas com reviewed_at = null (\"em revisão\").",
   "begin;",
 ];
 

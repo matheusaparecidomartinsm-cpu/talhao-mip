@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { Leaf, MailCheck } from "lucide-react";
+import { MailCheck } from "lucide-react";
+import { GlymaMark } from "@/components/brand";
 import { Button, Field, Note, inputCls } from "@/components/ui";
 import { backendEnabled, PUBLIC_ENV } from "@/lib/env";
 
@@ -82,7 +83,7 @@ function SignIn() {
 export default function Page() {
   return (
     <main id="conteudo" className="mx-auto grid min-h-dvh max-w-sm content-start gap-6 px-5 py-8">
-      <Link href="/" className="display flex items-center gap-2 text-xl font-extrabold text-ink"><Leaf className="size-7 text-accent-bright" aria-hidden />Talhão</Link>
+      <Link href="/" className="display flex items-center gap-2 text-xl font-extrabold text-ink"><GlymaMark className="size-7" />Glyma</Link>
       <Suspense><SignIn /></Suspense>
     </main>
   );

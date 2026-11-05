@@ -1,4 +1,4 @@
--- 0001_init — Talhão (gerado a partir de replica/schema.sql + travas do replica-backend)
+-- 0001_init — Glyma (gerado a partir de replica/schema.sql + travas do replica-backend)
 -- Postgres 15+ no Supabase. Acesso: Row Level Security em toda tabela.
 -- Convenções: uuid PK, timestamptz UTC, owner = user_id -> auth.users.
 

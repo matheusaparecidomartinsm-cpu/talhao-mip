@@ -84,7 +84,7 @@ export default function DiagnosisPage({ params }: { params: Promise<{ id: string
     const reason = {
       bad_image: "A foto ficou escura ou sem foco.",
       not_plant: "Não encontramos uma planta na foto.",
-      wrong_crop: "Por enquanto o Talhão só reconhece soja.",
+      wrong_crop: "Por enquanto o Glyma só reconhece soja.",
       not_identified: "Os sintomas não bateram com nenhum problema da nossa biblioteca com segurança.",
       healthy: "A planta parece sadia: não vimos sintomas na foto. Se algo te preocupa, tire uma foto mais de perto.",
     }[d.status as string] ?? "";
@@ -93,10 +93,10 @@ export default function DiagnosisPage({ params }: { params: Promise<{ id: string
         <AppBar title="Resultado" back="/" />
         <Page>
           {photo}
-          <EmptyState tone="warning" icon={<ScanSearch className="size-8" />} title={d.status === "healthy" ? "Nenhum problema à vista" : "Não conseguimos identificar"}
+          <EmptyState tone="warning" icon={<ScanSearch className="size-8" />} title={d.status === "healthy" ? "Nenhum problema à vista" : "Dessa vez a gente não sabe"}
             action={<>
               <ButtonLink href="/camera">Tirar outra foto</ButtonLink>
-              <ButtonLink href={`/comunidade/nova?diagnostico=${d.id}`} variant="secondary">Perguntar à comunidade</ButtonLink>
+              <ButtonLink href={`/comunidade/nova?diagnostico=${d.id}`} variant="secondary">Pedir para um especialista olhar</ButtonLink>
               <ButtonLink href="/biblioteca/soja" variant="ghost">Ver a biblioteca</ButtonLink>
             </>}>
             <p>{reason}</p>

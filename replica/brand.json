@@ -1,0 +1,8 @@
+{
+  "name": "Glyma",
+  "avoid": ["Plantix", "PEAT GmbH", "GartenBank", "Agrio", "Saillog", "Harvie"],
+  "domains": ["plantix.net", "b2b.plantix.net", "market.plantix.net"],
+  "colors": ["#00486C", "#7ED320", "#78D21E", "#CCEAA2"],
+  "colors_note": "Cores medidas nos prints do Agrio (referência visual). As cores do Plantix não foram medidas: o site não as expõe no texto lido. Medir no app instalado e acrescentar aqui.",
+  "skip_paths": ["node_modules", ".next", "replica", "public/prototipo", "test-results", "playwright-report", ".git", "package-lock.json"]
+}

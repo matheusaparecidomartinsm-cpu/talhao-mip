@@ -1,10 +1,13 @@
-# Talhão — manejo de pragas da soja
+# Glyma — diagnóstico de pragas e doenças da soja
 
-Protótipo de app de monitoramento de pragas e doenças da soja (MIP), feito para a palestra conjunta de Engenharia de Software e Agronomia.
+Foto da folha, resposta franca: o problema mais provável, quanta certeza o app tem e, quando não tem, um especialista da Agronomia olha junto. Nível de ação de cada praga antes de pensar em produto.
 
-- Mapa da fazenda com talhões coloridos por nível de infestação
-- Identificação por câmera (simulada no protótipo)
-- Régua NE / NC / NDE e simulador econômico de três cenários
-- Alertas com justificativa técnica e guia do manejo integrado
+Projeto da palestra conjunta de Engenharia de Software e Agronomia (Univel). O protótipo original está em `/prototipo/index.html`.
 
-Página estática: abra `index.html` no navegador.
+```bash
+npm install
+npm run build && npm start        # http://localhost:3000
+npm test                          # unidade + banco + ponta a ponta
+```
+
+Configuração (Supabase, Anthropic, push): `.env.example` e `replica/backend.md`.

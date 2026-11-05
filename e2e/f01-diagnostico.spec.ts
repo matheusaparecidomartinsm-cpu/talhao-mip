@@ -45,7 +45,7 @@ test("F01-E1 foto escura avisa antes de enviar", async ({ page, problems, axe })
   await axe();
   await page.getByRole("button", { name: "Enviar assim mesmo" }).click();
   await expect(page).toHaveURL(/\/diagnostico\//, { timeout: 15_000 });
-  await expect(page.getByRole("heading", { name: /Não conseguimos identificar|Nenhum problema/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Dessa vez a gente não sabe|Nenhum problema/ })).toBeVisible();
   await axe();
   void problems;
 });
@@ -64,7 +64,7 @@ test("F01-E3 offline vai para a fila e processa quando a rede volta", async ({ p
   await page.getByText(/Câmera indisponível|Sem acesso à câmera/).waitFor();
   await context.setOffline(true);
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/folha.jpg");
-  await expect(page.getByText("Foto guardada na fila")).toBeVisible();
+  await expect(page.getByText("Foto guardada")).toBeVisible();
   await page.getByRole("link", { name: "Voltar ao início" }).click().catch(() => {});
   await context.setOffline(false);
   await page.goto("/biblioteca");
@@ -122,7 +122,7 @@ test("F01-E7 duas abas não analisam o mesmo diagnóstico duas vezes", async ({ 
   await page.getByText(/Câmera indisponível|Sem acesso à câmera/).waitFor();
   await context.setOffline(true);
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/folha.jpg");
-  await expect(page.getByText("Foto guardada na fila")).toBeVisible();
+  await expect(page.getByText("Foto guardada")).toBeVisible();
   const second = await context.newPage();
   await second.goto("/biblioteca").catch(() => {});
   await context.setOffline(false);

@@ -7,10 +7,10 @@ import type { Diagnosis, Post } from "@/lib/data/types";
 
 type StoredDiagnosis = Diagnosis & { image: Blob; stats?: unknown; error?: string };
 
-const db = () => createStore("talhao", "diagnoses");
-const postsDb = () => createStore("talhao-posts", "posts");
+const db = () => createStore("glyma", "diagnoses");
+const postsDb = () => createStore("glyma-posts", "posts");
 
-export const QUEUE_EVENT = "talhao:queue";
+export const QUEUE_EVENT = "glyma:queue";
 const emit = () => window.dispatchEvent(new Event(QUEUE_EVENT));
 
 export async function saveDiagnosis(d: StoredDiagnosis) { await set(d.id, d, db()); emit(); }
@@ -33,7 +33,7 @@ export async function processQueue(): Promise<void> {
   if (running || !navigator.onLine) return;
   // Várias abas abertas: só uma processa a fila por vez.
   if (navigator.locks?.request) {
-    await navigator.locks.request("talhao-queue", { ifAvailable: true }, async (lock) => { if (lock) await drain(); });
+    await navigator.locks.request("glyma-queue", { ifAvailable: true }, async (lock) => { if (lock) await drain(); });
     return;
   }
   await drain();
@@ -79,7 +79,7 @@ export type Profile = {
   sowingDate?: string;
   areaHa?: number;
 };
-const PROFILE_KEY = "talhao:profile";
+const PROFILE_KEY = "glyma:profile";
 const DEFAULT_PROFILE: Profile = { onboarded: false, crops: ["soja"], notifyAlerts: true };
 
 export function getProfile(): Profile {
@@ -89,7 +89,7 @@ export function getProfile(): Profile {
 export function saveProfile(p: Partial<Profile>) {
   const next = { ...getProfile(), ...p };
   try { localStorage.setItem(PROFILE_KEY, JSON.stringify(next)); } catch { /* modo privado */ }
-  window.dispatchEvent(new Event("talhao:profile"));
+  window.dispatchEvent(new Event("glyma:profile"));
   return next;
 }
 export async function clearAll() {

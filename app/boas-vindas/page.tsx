@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Bell, Camera, Check, Leaf, Lock, MapPin, Sprout } from "lucide-react";
+import { Bell, Camera, Check, Leaf, Lock, MapPin, Sprout, UserCheck } from "lucide-react";
+import { GlymaMark } from "@/components/brand";
 import { Button, cx, inputCls } from "@/components/ui";
 import { saveProfile } from "@/lib/client/store";
 import { MUNICIPIOS } from "@/lib/data/seed";
@@ -19,7 +20,7 @@ export default function Welcome() {
   const [municipio, setMunicipio] = useState("");
   const [consent, setConsent] = useState(true);
 
-  useEffect(() => { document.title = "Boas-vindas · Talhão"; }, []);
+  useEffect(() => { document.title = "Boas-vindas · Glyma"; }, []);
 
   const finish = () => {
     saveProfile({ onboarded: true, crops, municipio: municipio || undefined, notifyAlerts: consent });
@@ -28,8 +29,8 @@ export default function Welcome() {
 
   return (
     <main id="conteudo" className="mx-auto flex min-h-dvh max-w-[var(--layout-content-max)] flex-col px-5 pb-6 pt-8">
-      <div className="flex items-center gap-2 text-xl font-extrabold text-ink display" aria-label="Talhão">
-        <Leaf className="size-7 text-accent-bright" aria-hidden />Talhão
+      <div className="flex items-center gap-2 text-xl font-extrabold text-ink display" aria-label="Glyma">
+        <GlymaMark className="size-7" />Glyma
       </div>
       <p className="mt-1 text-xs text-text-muted" aria-live="polite">Passo {step + 1} de 3</p>
       <div className="mt-2 flex gap-1" aria-hidden>
@@ -38,12 +39,13 @@ export default function Welcome() {
 
       {step === 0 && (
         <section className="mt-8 flex flex-1 flex-col" aria-labelledby="t0">
-          <h1 id="t0" className="display text-3xl font-extrabold">Descubra o que está atacando sua soja</h1>
+          <h1 id="t0" className="display text-3xl font-extrabold">O que deu na sua soja? Tire uma foto.</h1>
           <ul className="mt-6 grid gap-4">
             {[
-              { I: Camera, t: "Foto da folha", d: "Aponte a câmera e veja o problema mais provável em segundos." },
-              { I: Sprout, t: "Manejo integrado", d: "Controle cultural, biológico e químico, com nível de ação antes de aplicar." },
-              { I: Bell, t: "Alerta da região", d: "Avisamos quando o clima favorece uma doença perto de você." },
+              { I: Camera, t: "Foto da folha", d: "Em segundos: o mais provável e quanta certeza a gente tem." },
+              { I: UserCheck, t: "Quando a gente não sabe, fala", d: "E um especialista da Agronomia olha a foto junto com você." },
+              { I: Sprout, t: "Aplicar ou não", d: "Nível de ação de cada praga antes de pensar em produto." },
+              { I: Bell, t: "Alerta da região", d: "No máximo um aviso por dia, só quando o clima pede atenção." },
             ].map(({ I, t, d }) => (
               <li key={t} className="flex gap-3">
                 <span className="grid size-12 shrink-0 place-items-center rounded-full bg-accent-soft text-accent"><I className="size-6" aria-hidden /></span>
@@ -101,7 +103,7 @@ export default function Welcome() {
             <span><span className="font-semibold text-ink">Quero receber alertas de doença na região</span><br /><span className="text-text-muted">No máximo um aviso por dia. Dá pra desligar no perfil.</span></span>
           </label>
           <div className="mt-auto grid gap-2 pt-8">
-            <Button size="lg" onClick={finish}>Entrar no Talhão</Button>
+            <Button size="lg" onClick={finish}>Entrar no Glyma</Button>
             <Button variant="ghost" onClick={() => setStep(1)}>Voltar</Button>
           </div>
         </section>

@@ -35,5 +35,5 @@
     radial-gradient(circle at 32% 40%, hsl(var(--h) 55% 42%) 0 5%, transparent 6%),
     radial-gradient(circle at 62% 58%, hsl(var(--h) 55% 38%) 0 4%, transparent 5%),
     radial-gradient(circle at 46% 72%, hsl(var(--h) 50% 40%) 0 3%, transparent 4%),
-    linear-gradient(135deg, var(--color-accent-bright), var(--color-ink));
+    linear-gradient(135deg, var(--color-leaf), var(--color-leaf-dark));
 }

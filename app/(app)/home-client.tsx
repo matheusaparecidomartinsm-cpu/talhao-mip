@@ -27,7 +27,7 @@ export function HomeClient({ alerts, weather: sampleWeather, tips, problems }: P
   }, []);
 
   if (!profile) {
-    return (<><AppBar title="Talhão" /><Page><Skeleton className="h-32 w-full rounded-md" /><Skeleton className="mt-4 h-20 w-full rounded-md" /></Page></>);
+    return (<><AppBar title="Glyma" /><Page><Skeleton className="h-32 w-full rounded-md" /><Skeleton className="mt-4 h-20 w-full rounded-md" /></Page></>);
   }
 
   const mine = profile.municipio ? alerts.filter((a) => a.municipio === profile.municipio) : [];
@@ -37,7 +37,7 @@ export function HomeClient({ alerts, weather: sampleWeather, tips, problems }: P
 
   return (
     <>
-      <AppBar title="Talhão" />
+      <AppBar title="Glyma" />
       <Page>
         <p className="text-sm text-text-muted">{profile.name ? `Olá, ${profile.name}` : "Olá"}{profile.municipio && <> · <MapPin className="inline size-3.5" aria-hidden /> {profile.municipio}</>}</p>
         <h2 className="display mt-1 text-2xl font-bold">O que está acontecendo na sua soja?</h2>
@@ -45,7 +45,7 @@ export function HomeClient({ alerts, weather: sampleWeather, tips, problems }: P
         <Card className="mt-4 flex items-center gap-4 bg-accent-soft p-4 shadow-none">
           <div className="min-w-0 flex-1">
             <p className="font-bold text-ink">Tire uma foto da folha</p>
-            <p className="text-sm text-text-muted">Em segundos você vê o problema mais provável e como manejar.</p>
+            <p className="text-sm text-text-muted">Em segundos: o mais provável, quanta certeza temos e o que fazer.</p>
           </div>
           <ButtonLink href="/camera" aria-label="Diagnosticar com foto"><Camera className="size-5" aria-hidden /><span className="hidden sm:inline">Diagnosticar</span></ButtonLink>
         </Card>

@@ -16,7 +16,7 @@ export default function Privacy() {
     <>
       <AppBar title="Privacidade" back />
       <Page className="prose-sm">
-        <h2 className="display text-2xl font-bold">Como o Talhão usa seus dados</h2>
+        <h2 className="display text-2xl font-bold">Como o Glyma usa seus dados</h2>
         <p className="mt-2 text-text-muted">Versão de 5 de novembro de 2026. Projeto acadêmico em desenvolvimento.</p>
         <h3 className="mt-6 text-lg font-bold">O que guardamos</h3>
         <ul className="mt-2 list-disc pl-5 text-text-muted">

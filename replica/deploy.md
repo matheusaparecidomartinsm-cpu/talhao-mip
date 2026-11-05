@@ -1,6 +1,6 @@
 # Deploy — Glyma
 
-Data: 05/11/2026 · Branch: `clone-plantix` (repo `matheusaparecidomartinsm-cpu/talhao-mip`) · Nada foi publicado: ver "Decisão".
+Data: 05/11/2026 · Branch: `clone-plantix` (repo `matheusaparecidomartinsm-cpu/talhao-mip`) · **Versão de teste no ar; produção intocada** (ver "Decisão").
 
 ## 1. Checagens (preflight)
 
@@ -81,6 +81,24 @@ Primeira semana: % de "não identificado", % de "bateu", latência do diagnósti
 
 Sem app nativo. Android: publicar o PWA na Play como Trusted Web Activity (Bubblewrap ou PWABuilder) **depois** do beta, com conta de desenvolvedor Google (US$ 25, uma vez, no nome do Matheus) e o `listing.json`. iPhone: pelo Safari, "Adicionar à Tela de Início".
 
-## Decisão
+## Decisão e resultado
 
-Produção **não** vai ao ar: a checagem de paridade falhou (must-haves 8/11). O que dá para fazer com segurança agora é uma **versão de teste** da branch, que só abre logado na Vercel, para você ver no celular. Isso exige enviar a branch ao GitHub (push), o que ainda não foi feito.
+Produção **não** foi ao ar: a checagem de paridade falhou (must-haves 8/11). Com o ok do Matheus (05/11/2026), a branch foi enviada ao GitHub e a Vercel gerou uma **versão de teste**, que só abre logado na conta da Vercel:
+
+- **Link fixo da branch:** https://talhao-mip-git-clone-plantix-matheus-f340.vercel.app (sempre aponta para o último commit da branch)
+- Último deploy: `dpl_2dR8zYz6AiJUo6DTJDb8Cyw9jfxR`, commit `de52368`, estado READY
+- Produção (`talhao-mip.vercel.app`): continua com o protótipo antigo (commit `d5a2eb5` da `main`), sem alteração
+- Conferido no ar: `/sobre`, `/biblioteca/soja/ferrugem-asiatica` e `/api/clima?m=Cascavel` respondem 200, com título e cor da marca; **0 erros de execução** na Vercel na última hora
+- Modo: local (sem Supabase e sem chave da Anthropic). Dados ficam no aparelho e o diagnóstico é de demonstração
+- Corrigido depois do primeiro deploy: título da página `/sobre` repetia "Glyma"
+
+### Para virar produção
+
+1. Os itens bloqueados da seção 1 (diagnóstico real com acerto medido, decisão de escopo, fila de especialistas)
+2. Supabase novo + variáveis no ambiente Production da Vercel
+3. Abrir um pull request de `clone-plantix` para `main`. Ao juntar, a produção passa a ser o Glyma no lugar do protótipo (o protótipo continua em `/prototipo/index.html`)
+4. Domínio próprio com os registros da seção 3
+
+### Primeira semana depois de ir para produção
+
+Runtime Logs e erros da Vercel todo dia; `job_runs` (o job das 5h rodou?); % de "não identificado" e de "bateu"; latência do diagnóstico; quantos 429 de limite diário; custo no painel da Anthropic.

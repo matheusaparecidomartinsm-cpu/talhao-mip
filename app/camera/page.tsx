@@ -56,7 +56,7 @@ export default function CameraPage() {
     stop();
     if (!navigator.onLine) { setPhase({ k: "queued", url }); return; }
     setPhase({ k: "analyzing", url, id, slow: false });
-    sessionStorage.setItem(`seen:${id}`, "1");
+    localStorage.setItem(`seen:${id}`, "1");
     processQueue();
   }, []);
 

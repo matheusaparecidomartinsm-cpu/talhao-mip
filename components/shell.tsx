@@ -92,7 +92,7 @@ export function ProcessingBar() {
       const all = await listDiagnoses();
       const recent = all.filter((d) =>
         ["pending", "queued", "failed"].includes(d.status) ||
-        (Date.now() - new Date(d.createdAt).getTime() < 90_000 && !sessionStorage.getItem(`seen:${d.id}`)));
+        (Date.now() - new Date(d.createdAt).getTime() < 90_000 && !localStorage.getItem(`seen:${d.id}`)));
       if (alive) setItems(recent.map((d) => {
         const top = d.candidates[0] && problemBySlug(d.candidates[0].problemSlug);
         return { id: d.id, status: d.status, hue: top?.hue ?? 100, label: top?.commonName ?? "" };
@@ -108,7 +108,7 @@ export function ProcessingBar() {
 
   useEffect(() => {
     const m = path.match(/^\/diagnostico\/(.+)$/);
-    if (m) { sessionStorage.setItem(`seen:${m[1]}`, "1"); setItems((x) => x.filter((i) => i.id !== m[1])); }
+    if (m) { localStorage.setItem(`seen:${m[1]}`, "1"); setItems((x) => x.filter((i) => i.id !== m[1])); }
   }, [path]);
 
   if (!items.length) return null;

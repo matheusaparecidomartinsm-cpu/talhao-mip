@@ -60,13 +60,13 @@ export async function diagnose(stats: ImageStats): Promise<DiagnoseResult> {
   const model = "demo-heuristica-v0";
   if (stats.brightness < 0.16) return { status: "bad_image", candidates: [], model };
   if (stats.green < 0.08 && stats.brown < 0.08) return { status: "not_plant", candidates: [], model };
-  const pool = stats.brown > 0.12
+  const pool = stats.brown > 0.04
     ? ["ferrugem-asiatica", "mancha-alvo", "antracnose", "deficiencia-de-potassio"]
     : ["lagarta-da-soja", "oidio", "percevejo-marrom", "crestamento-bacteriano", "mosca-branca"];
   const first = pool[stats.hash % pool.length];
   const second = pool[(stats.hash + 1) % pool.length];
   const p1 = 0.55 + ((stats.hash >> 3) % 35) / 100;      // 0.55–0.89
-  if (stats.hash % 9 === 0) return { status: "not_identified", candidates: [], model };
+  if (stats.green < 0.2 && stats.brown < 0.05) return { status: "not_identified", candidates: [], model };
   return {
     status: "ok",
     model,

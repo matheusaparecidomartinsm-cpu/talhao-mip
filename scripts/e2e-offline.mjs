@@ -1,0 +1,15 @@
+import { chromium } from "playwright-core";
+const b = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
+await ctx.addInitScript(() => localStorage.setItem("talhao:profile", JSON.stringify({ onboarded: true, crops: ["soja"], municipio: "Cascavel" })));
+const pg = await ctx.newPage();
+await pg.goto("http://localhost:3100/");
+await pg.evaluate(async () => { await navigator.serviceWorker.ready; });
+await pg.waitForTimeout(1500);
+const cached = await pg.evaluate(async () => (await (await caches.open((await caches.keys())[0])).keys()).length);
+await ctx.setOffline(true);
+await pg.goto("http://localhost:3100/biblioteca/soja/mancha-alvo");
+console.log("itens no cache:", cached, "| offline, ficha nunca visitada:", await pg.locator("h2").first().innerText());
+await pg.goto("http://localhost:3100/biblioteca/soja");
+console.log("offline, lista:", await pg.locator("h2").first().innerText(), "| aviso:", await pg.getByText("Sem internet").count() > 0);
+await b.close();

@@ -1,5 +1,7 @@
 # Plano de testes — Talhão
 
+**Última execução (05/11/2026):** 59 testes de ponta a ponta (`npm run test:e2e`), 14 de unidade (`npm run test:unit`) e 13 verificações de acesso no banco (`npm run test:db`). Tudo passou, em duas execuções seguidas sem instabilidade. 8 itens manuais aguardam o projeto real.
+
 Alvo: o **clone** rodando localmente (`npm run build && npx next start -p 3100`) com dados semente, no modo sem servidor.
 Regras de acesso do banco: `scripts/db-test.sh`. Módulos de diagnóstico e alertas: `tests/*.test.ts`. Nada é executado contra o Plantix.
 

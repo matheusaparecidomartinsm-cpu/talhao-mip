@@ -1,0 +1,10 @@
+{
+  "name": "Talhão — manejo da soja",
+  "short_name": "Talhão",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#173A2A",
+  "lang": "pt-BR",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

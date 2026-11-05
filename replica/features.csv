@@ -1,0 +1,46 @@
+feature,area,priority,original,clone,notes
+Diagnóstico por foto (câmera),diagnóstico,must,yes,no,S04-S06; loop central; meta 3 toques e <=3 s
+Escolher foto da galeria,diagnóstico,must,yes,no,S04
+Seleção da cultura antes do diagnóstico,diagnóstico,must,yes,no,S04; no MVP só soja (pré-selecionada)
+Lista de candidatos com probabilidade,diagnóstico,must,yes,no,S06; API retorna probabilidade por problema
+Estado "não identificado" / foto ruim / cultura errada,diagnóstico,must,yes,no,S06; 3 checagens (foto/cultura/problema)
+Fotos de exemplo do problema no resultado,diagnóstico,should,yes,no,S06; fotos próprias ou de licença aberta
+Fila offline de diagnósticos,diagnóstico,should,partial,no,S05; original roda TFLite no aparelho
+Histórico de diagnósticos,diagnóstico,should,inferred,no,S17
+Ficha do problema (sintomas/causa/controle orgânico/químico/prevenção),biblioteca,must,yes,no,S07; conteúdo próprio escrito com base em fontes abertas
+Biblioteca por cultura,biblioteca,must,yes,no,S08; MVP só soja
+Filtro por tipo de agente,biblioteca,must,yes,no,S09; fungo/bactéria/vírus/inseto/ácaro/deficiência/outro
+Índice A–Z e busca,biblioteca,should,yes,no,S09
+Biblioteca disponível offline,biblioteca,must,yes,no,service worker / cache; crítico no talhão
+Compartilhar ficha,biblioteca,could,yes,no,S07; Web Share API
+Outros problemas desta cultura,biblioteca,should,yes,no,S07 rodapé
+Onboarding idioma e permissões,onboarding,should,inferred,no,S01; MVP só pt-BR
+Escolher minhas culturas,onboarding,should,inferred,no,S02
+Uso como convidado (sem cadastro),onboarding,must,yes,no,primeiro uso sem registro
+Conta/login opcional,conta,should,inferred,no,S18; necessário para comunidade e histórico na nuvem
+Excluir meus dados,conta,should,yes,no,Play Store data safety; LGPD
+Início com culturas/alerta/clima/dica,início,must,inferred,no,S03
+Comunidade: feed de perguntas,comunidade,should,yes,no,S10
+Comunidade: nova pergunta com foto,comunidade,should,yes,no,S11; anexa foto do diagnóstico (F03)
+Comunidade: respostas e selo de especialista,comunidade,should,yes,no,S12; semear com turma de Agronomia
+Comunidade: curtir e denunciar,comunidade,could,inferred,no,S12; moderação
+Alertas de doença na região,alertas,should,yes,no,S13; regra clima + diagnósticos próprios
+Notificações push,alertas,should,yes,no,FCM no original; Web Push no clone; limitar frequência
+Clima agrícola com janela de pulverização,clima,should,yes,no,S14; API de clima pública
+Calendário/plano de cultivo por fase,cultivo,could,yes,no,S15; estádios fenológicos da soja (VE..R8)
+Calculadora de adubo por área,cultivo,could,yes,no,S16; suportar ha e alqueire paranaense
+Produtos registrados para o problema,tratamento,could,partial,no,link Agrofit/MAPA; sem venda
+Diagnóstico via WhatsApp,canais,could,yes,no,exige WhatsApp Business API
+Multi-idioma (19 idiomas),i18n,skip,yes,no,fora do escopo: público brasileiro
+Modelo de IA treinado do Plantix,diagnóstico,skip,yes,no,propriedade do Plantix; usar modelo próprio ou multimodal
+Biblioteca de ~750 fichas e fotos do Plantix,biblioteca,skip,yes,no,conteúdo protegido pelos termos; escrever conteúdo próprio
+Marketplace de insumos e revendas parceiras,tratamento,skip,yes,no,acordos comerciais; receituário agronômico
+Produtos B2B (API Toolkit / Crop Insights / Demand Creation),b2b,skip,yes,no,dependem de base massiva de usuários
+Anúncios (AdMob),monetização,skip,yes,no,não faz sentido num app acadêmico/MIP
+Frase de confiança no resultado (Muito provável / Provável / Possível),diagnóstico,should,agrio,no,padrão visto nos prints do Agrio; textos próprios
+Faixa de processamento com fila de fotos,diagnóstico,should,agrio,no,referência Agrio; casa com a fila offline
+Calendário de manejo (aplicações e monitoramentos),cultivo,could,agrio,no,referência Agrio "calendário de intervenções"
+Graus-dia com fases da praga,cultivo,could,agrio,no,útil para lagartas; precisa de temperatura diária
+Inspeção de campo com mapa e trajeto,monitoramento,could,agrio,no,casa com o mapa de talhões do protótipo Talhão
+Assistente de chat com IA,assistente,could,agrio,no,sem mascote; o robô do Agrio é deles
+Monitoramento por satélite (NDVI),monitoramento,skip,agrio,no,exige processamento de imagens Sentinel; outro projeto

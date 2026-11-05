@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talhão — primitivos do sistema de design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--color-surface-sunken);color:var(--color-text);font-size:var(--text-md);line-height:var(--leading-md)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}
+.page{max-width:var(--layout-content-max);margin:0 auto;padding:var(--space-6) var(--space-4) 160px}
+h1{font-family:var(--font-display);font-stretch:118%;font-weight:var(--weight-heavy);font-size:var(--text-3xl);line-height:var(--leading-3xl);color:var(--color-ink)}
+h2.sec{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);margin:var(--space-8) 0 var(--space-3);font-weight:var(--weight-bold)}
+.lead{color:var(--color-text-muted);margin-top:var(--space-2)}
+.panel{background:var(--color-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:var(--space-4)}
+.row{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
+.stack{display:grid;gap:var(--space-3)}
+svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* swatches */
+.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-2)}
+.sw div{border-radius:var(--radius-sm);padding:var(--space-2);font-size:var(--text-xs);line-height:var(--leading-xs);min-height:56px;display:flex;align-items:flex-end;border:1px solid var(--color-border)}
+
+/* botão */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:48px;padding:0 20px;border-radius:var(--radius-md);font-weight:var(--weight-semibold);border:1px solid transparent;cursor:pointer;transition:background var(--duration-fast) var(--ease-standard),transform var(--duration-fast)}
+.btn:active{transform:scale(.98)}
+.btn.sm{min-height:36px;padding:0 14px;font-size:var(--text-sm)}
+.btn.lg{min-height:56px;width:100%;font-size:var(--text-lg)}
+.btn.primary{background:var(--color-accent);color:var(--color-on-accent)}
+.btn.primary:hover{background:var(--color-accent-hover)}
+.btn.secondary{background:var(--color-surface);color:var(--color-ink);border-color:var(--color-border-strong)}
+.btn.ghost{background:none;color:var(--color-accent)}
+.btn.danger{background:var(--color-danger);color:var(--color-on-danger)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.spin{width:18px;height:18px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:r .8s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:var(--color-surface);font-size:var(--text-sm);font-weight:var(--weight-semibold);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--color-accent-soft);border-color:var(--color-accent);color:var(--color-ink)}
+.pill{min-height:36px}
+.pill[aria-checked=true]{background:var(--color-ink);color:var(--color-text-inverse);border-color:var(--color-ink)}
+.cropgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2)}
+.crop{min-height:96px;border-radius:var(--radius-lg);border:1px solid var(--color-border);background:var(--color-surface);display:grid;place-items:center;gap:4px;padding:var(--space-3);font-weight:var(--weight-semibold);font-size:var(--text-sm);position:relative;cursor:pointer}
+.crop svg.i{width:28px;height:28px;color:var(--color-accent)}
+.crop[aria-pressed=true]{background:var(--color-accent-soft);border-color:var(--color-accent)}
+.crop[aria-pressed=true]::after{content:"✓";position:absolute;top:8px;right:10px;color:var(--color-accent);font-weight:800}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:var(--weight-semibold)}
+.a-fungo{background:var(--color-agent-fungo-bg);color:var(--color-agent-fungo-fg)}
+.a-bacteria{background:var(--color-agent-bacteria-bg);color:var(--color-agent-bacteria-fg)}
+.a-virus{background:var(--color-agent-virus-bg);color:var(--color-agent-virus-fg)}
+.a-nematoide{background:var(--color-agent-nematoide-bg);color:var(--color-agent-nematoide-fg)}
+.a-inseto{background:var(--color-agent-inseto-bg);color:var(--color-agent-inseto-fg)}
+.a-acaro{background:var(--color-agent-acaro-bg);color:var(--color-agent-acaro-fg)}
+.a-deficiencia{background:var(--color-agent-deficiencia-bg);color:var(--color-agent-deficiencia-fg)}
+.a-outro{background:var(--color-agent-outro-bg);color:var(--color-agent-outro-fg)}
+.expert{background:var(--color-accent-soft);color:var(--color-accent)}
+
+/* resultado */
+.photo{aspect-ratio:4/3;border-radius:var(--radius-md);background:linear-gradient(135deg,#5c7d3a,#2f4a22 60%,#a07a2e);position:relative;overflow:hidden}
+.photo::after{content:"";position:absolute;inset:18% 22%;border-radius:50% 10%;background:radial-gradient(circle at 30% 40%,#c48a3a 0 6%,transparent 7%),radial-gradient(circle at 60% 55%,#b4782f 0 5%,transparent 6%),radial-gradient(circle at 45% 70%,#a86b2a 0 4%,transparent 5%),#6e9a3e;transform:rotate(-18deg)}
+.car{display:grid;grid-template-columns:82% 82%;gap:var(--space-2);overflow:hidden}
+.car .photo.ex{background:linear-gradient(135deg,#7da04a,#3d5e28)}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:var(--space-2)}
+.dots button{width:8px;height:8px;border-radius:50%;border:0;background:var(--color-border-strong)}
+.dots button[aria-current=true]{background:var(--color-ink);width:20px;border-radius:4px}
+.conf{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-4)}
+.rname{font-size:var(--text-2xl);line-height:var(--leading-2xl);font-weight:var(--weight-bold);color:var(--color-ink);font-stretch:112%}
+.sci{font-style:italic;color:var(--color-text-muted);font-size:var(--text-sm)}
+.meter{height:4px;border-radius:2px;background:var(--color-surface-sunken);overflow:hidden;margin-top:var(--space-2)}
+.meter i{display:block;height:100%;background:var(--color-accent)}
+.meter.mid i{background:var(--color-warning-strong)}
+
+/* accordion */
+.acc{border-top:1px solid var(--color-border)}
+.acc details{border-bottom:1px solid var(--color-border)}
+.acc summary{list-style:none;display:flex;align-items:center;gap:var(--space-3);min-height:56px;font-weight:var(--weight-semibold);color:var(--color-ink);cursor:pointer}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .i:first-child{color:var(--color-accent)}
+.acc summary .chev{margin-left:auto;transition:transform var(--duration-base) var(--ease-standard);color:var(--color-text-muted)}
+.acc details[open] .chev{transform:rotate(180deg)}
+.acc .body{padding:0 0 var(--space-4) 32px;color:var(--color-text-muted);font-size:var(--text-sm);line-height:var(--leading-sm)}
+.note{font-size:var(--text-xs);line-height:var(--leading-xs);color:var(--color-warning);background:var(--color-warning-soft);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);margin-top:var(--space-3)}
+
+/* card problema */
+.pcard{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);border-radius:var(--radius-md);text-decoration:none;color:inherit;background:var(--color-surface)}
+.pcard:hover{background:var(--color-surface-sunken)}
+.thumb{width:64px;height:64px;border-radius:var(--radius-sm);flex:none;background:linear-gradient(135deg,#6e9a3e,#3d5e28)}
+.thumb.b{background:linear-gradient(135deg,#8a6a3a,#4b5a2a)}
+.pcard b{display:block}
+.pcard .meta{display:flex;gap:6px;align-items:center;margin-top:4px}
+
+/* alertas */
+.alert{display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);border-bottom:1px solid var(--color-border);text-decoration:none;color:inherit}
+.alert.unread{background:var(--color-danger-soft)}
+.alert .ic{width:48px;height:48px;border-radius:var(--radius-sm);display:grid;place-items:center;flex:none;background:var(--color-surface);color:var(--color-danger);border:1px solid var(--color-danger)}
+.alert .ic.med{color:var(--color-warning);border-color:var(--color-warning-strong);background:var(--color-warning-soft)}
+.alert .tx{min-width:0;flex:1}
+.alert .tx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:var(--text-sm);color:var(--color-text-muted)}
+.alert time{font-size:var(--text-xs);color:var(--color-text-subtle);align-self:flex-start}
+.acard{background:var(--color-surface);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);box-shadow:var(--shadow-pop);padding:var(--space-4)}
+.acard h3{display:flex;gap:var(--space-2);align-items:center;color:var(--color-danger);font-size:var(--text-lg)}
+.acard p{color:var(--color-text-muted);margin:var(--space-2) 0 var(--space-3)}
+.mini{display:flex;gap:var(--space-2);align-items:center;background:var(--color-surface-sunken);border-radius:var(--radius-sm);padding:6px;font-weight:var(--weight-semibold);margin-bottom:var(--space-3)}
+.mini .thumb{width:40px;height:40px}
+
+/* comunidade */
+.post{display:flex;gap:var(--space-3);padding:var(--space-3);border-bottom:1px solid var(--color-border)}
+.post.new{background:var(--color-success-soft)}
+.post .thumb{width:56px;height:56px}
+.post .c{font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-ink)}
+.post .m{font-size:var(--text-xs);color:var(--color-text-muted);display:flex;gap:var(--space-3);margin-top:2px}
+.post .m .nw{color:var(--color-success);font-weight:var(--weight-bold)}
+.ans{display:grid;grid-template-columns:32px 1fr;gap:var(--space-3)}
+.av{width:32px;height:32px;border-radius:50%;background:var(--color-accent-soft);color:var(--color-ink);display:grid;place-items:center;font-size:var(--text-xs);font-weight:var(--weight-bold)}
+.useful{display:inline-flex;gap:6px;align-items:center;min-height:36px;padding:0 12px;border-radius:var(--radius-full);border:1px solid var(--color-border-strong);background:var(--color-surface);font-size:var(--text-sm);font-weight:var(--weight-semibold);cursor:pointer}
+.useful[aria-pressed=true]{background:var(--color-accent-soft);border-color:var(--color-accent);color:var(--color-accent)}
+
+/* clima */
+table.wx{width:100%;border-collapse:collapse;text-align:center;font-size:var(--text-sm)}
+.wx th{font-weight:var(--weight-semibold);padding:var(--space-2) 0;color:var(--color-text)}
+.wx td{padding:4px 0}
+.wx .today{background:var(--color-info-soft)}
+.wx .rain{height:28px;vertical-align:bottom}
+.wx .rain i{display:block;margin:0 auto;width:60%;background:var(--color-info);border-radius:2px 2px 0 0}
+.wx .mm{font-size:var(--text-xs);color:var(--color-info)}
+.ok{color:var(--color-success);font-weight:var(--weight-bold);font-size:var(--text-xs)}
+.no{color:var(--color-danger);font-weight:var(--weight-bold);font-size:var(--text-xs)}
+
+/* estádios */
+ol.stages{list-style:none;display:flex;justify-content:space-between;position:relative;padding-top:4px}
+ol.stages::before{content:"";position:absolute;left:12px;right:12px;top:15px;height:2px;background:var(--color-border)}
+ol.stages li{position:relative;text-align:center;font-size:var(--text-xs);color:var(--color-text-muted);width:48px}
+ol.stages li i{display:block;width:24px;height:24px;border-radius:50%;margin:0 auto 4px;background:var(--color-surface);border:2px solid var(--color-border)}
+ol.stages li.past i{background:var(--color-accent-bright);border-color:var(--color-accent-bright)}
+ol.stages li[aria-current=step] i{background:var(--color-accent);border-color:var(--color-accent);box-shadow:0 0 0 4px var(--color-accent-soft)}
+ol.stages li[aria-current=step]{color:var(--color-ink);font-weight:var(--weight-bold)}
+
+/* inputs */
+label.f{display:grid;gap:4px;font-size:var(--text-sm);font-weight:var(--weight-semibold)}
+.in{height:48px;border:1px solid var(--color-border-input);border-radius:var(--radius-md);padding:0 var(--space-3);background:var(--color-surface);font-weight:var(--weight-regular)}
+.in:focus{outline:2px solid var(--color-focus);outline-offset:1px}
+.in[aria-invalid=true]{border-color:var(--color-danger)}
+.err{color:var(--color-danger);font-size:var(--text-xs);font-weight:var(--weight-semibold)}
+.help{color:var(--color-text-muted);font-size:var(--text-xs);font-weight:var(--weight-regular)}
+.unit{display:flex}
+.unit .in{border-radius:var(--radius-md) 0 0 var(--radius-md);flex:1;min-width:0}
+.unit select{border:1px solid var(--color-border-input);border-left:0;border-radius:0 var(--radius-md) var(--radius-md) 0;padding:0 var(--space-3);background:var(--color-surface-sunken);font-weight:var(--weight-semibold)}
+
+/* vazio, toast, offline, faixa */
+.empty{text-align:center;padding:var(--space-6) var(--space-4)}
+.empty .circ{width:72px;height:72px;border-radius:50%;background:var(--color-accent-soft);color:var(--color-accent);display:grid;place-items:center;margin:0 auto var(--space-3)}
+.empty .circ svg.i{width:32px;height:32px}
+.empty b{display:block;font-size:var(--text-lg);color:var(--color-ink)}
+.empty p{color:var(--color-text-muted);font-size:var(--text-sm);margin:4px 0 var(--space-4)}
+.toast{display:flex;gap:var(--space-2);align-items:center;background:var(--color-surface-inverse);color:var(--color-text-inverse);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);box-shadow:var(--shadow-pop);font-size:var(--text-sm)}
+.toast.err{background:var(--color-danger)}
+.offline{display:flex;gap:var(--space-2);align-items:center;background:var(--color-warning-soft);color:var(--color-warning);font-size:var(--text-sm);font-weight:var(--weight-semibold);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm)}
+.skel{height:14px;border-radius:4px;background:linear-gradient(90deg,var(--color-surface-sunken),#f6f8f5,var(--color-surface-sunken));background-size:200% 100%;animation:sh 1.6s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.unid .circ{background:var(--color-warning-soft);color:var(--color-warning)}
+.unid ul{text-align:left;font-size:var(--text-sm);color:var(--color-text-muted);margin:0 auto var(--space-4);max-width:320px;padding-left:20px}
+
+/* chrome do app: faixa, fab, abas */
+.dock{position:fixed;left:0;right:0;bottom:0;pointer-events:none}
+.dock>*{pointer-events:auto}
+.dockin{max-width:var(--layout-content-max);margin:0 auto;position:relative}
+.fab{position:absolute;right:16px;bottom:144px;width:64px;height:64px;border-radius:50%;border:0;background:var(--color-accent);color:var(--color-on-accent);box-shadow:var(--shadow-fab);display:grid;place-items:center;cursor:pointer}
+.fab svg.i{width:28px;height:28px}
+.proc{margin:0 8px;display:flex;align-items:center;gap:var(--space-3);background:var(--color-surface-inverse);color:var(--color-text-inverse);border-radius:var(--radius-md) var(--radius-md) 0 0;padding:8px 12px;font-size:var(--text-sm);position:relative;overflow:hidden}
+.proc::before{content:"";position:absolute;left:0;top:0;height:3px;width:62%;background:var(--color-accent-bright)}
+.proc .thumb{width:40px;height:40px}
+.proc .chev{margin-left:auto}
+nav.tabs{display:grid;grid-template-columns:repeat(5,1fr);height:var(--layout-tab-bar);background:var(--color-surface);border-top:1px solid var(--color-border)}
+nav.tabs a{display:grid;place-items:center;align-content:center;gap:2px;font-size:var(--text-xs);color:var(--color-text-muted);text-decoration:none;font-weight:var(--weight-semibold);position:relative}
+nav.tabs a[aria-current=page]{color:var(--color-ink)}
+nav.tabs a[aria-current=page]::before{content:"";position:absolute;top:0;left:25%;right:25%;height:3px;border-radius:0 0 3px 3px;background:var(--color-accent-bright)}
+nav.tabs .badge-dot{position:absolute;top:8px;left:55%;min-width:18px;height:18px;border-radius:9px;background:var(--color-danger);color:var(--color-on-danger);font-size:11px;line-height:18px;text-align:center;padding:0 4px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="house" viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 12 0v1"/><path d="M16 4a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6"/></symbol>
+  <symbol id="book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="alert" viewBox="0 0 24 24"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="chevup" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></symbol>
+  <symbol id="sprout" viewBox="0 0 24 24"><path d="M12 21v-9M12 12C12 7 8 4 3 4c0 5 4 8 9 8zM12 14c0-4 3-7 9-7 0 4-3 7-9 7z"/></symbol>
+  <symbol id="bug" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="13" rx="5"/><path d="M12 7V4M9 4l1.5 2M15 4l-1.5 2M3 12h4M17 12h4M4 18l3-2M20 18l-3-2M4 6l3 2M20 6l-3 2"/></symbol>
+  <symbol id="flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19A1.5 1.5 0 0 0 6 21h12a1.5 1.5 0 0 0 1.5-2L14 9V3M7 15h10"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="msg" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="thumb" viewBox="0 0 24 24"><path d="M7 10v11H3V10zM7 10l4-8a3 3 0 0 1 3 3v4h6a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 18.6 21H7"/></symbol>
+  <symbol id="leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13C4 7 9 3 20 3c0 11-4 17-9 17zM4 21c3-5 6-8 11-11"/></symbol>
+  <symbol id="scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="11" cy="11" r="3"/><path d="M16 16l-2.5-2.5"/></symbol>
+  <symbol id="wifi-off" viewBox="0 0 24 24"><path d="M2 2l20 20M8.5 16.5a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.8M19 12.9a10 10 0 0 0-2.3-1.7M2 8.8a15 15 0 0 1 4.2-2.7M22 8.8A15 15 0 0 0 11 5M12 20h.01"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="rain" viewBox="0 0 24 24"><path d="M20 16.6A5 5 0 0 0 18 7h-1.3A8 8 0 1 0 4 15.3M8 19v2M8 13v2M16 19v2M16 13v2M12 21v2M12 15v2"/></symbol>
+  <symbol id="cloudsun" viewBox="0 0 24 24"><path d="M12 2v2M4.9 4.9l1.4 1.4M20 12h2M19.1 4.9l-1.4 1.4M15.9 13A4 4 0 0 0 8.3 10.4"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6z"/></symbol>
+</svg>
+
+<main class="page">
+  <h1>Talhão</h1>
+  <p class="lead">Primitivos do sistema de design. Tudo nesta página vem de <code>tokens.css</code>, sem cor solta.</p>
+
+  <h2 class="sec">Cores (papéis)</h2>
+  <div class="sw panel">
+    <div style="background:var(--color-ink);color:#fff">ink</div>
+    <div style="background:var(--color-accent);color:#fff">accent</div>
+    <div style="background:var(--color-accent-bright);color:#fff">accent-bright</div>
+    <div style="background:var(--color-accent-soft)">accent-soft</div>
+    <div style="background:var(--color-danger);color:#fff">danger</div>
+    <div style="background:var(--color-danger-soft)">danger-soft</div>
+    <div style="background:var(--color-warning-strong)">warning-strong</div>
+    <div style="background:var(--color-warning-soft)">warning-soft</div>
+    <div style="background:var(--color-info);color:#fff">info</div>
+    <div style="background:var(--color-info-soft)">info-soft</div>
+    <div style="background:var(--color-surface-sunken)">sunken</div>
+    <div style="background:var(--color-border)">border</div>
+  </div>
+
+  <h2 class="sec">Botões</h2>
+  <div class="panel stack">
+    <div class="row">
+      <button class="btn primary"><svg class="i"><use href="#camera"/></svg>Tirar foto</button>
+      <button class="btn secondary">Ver biblioteca</button>
+      <button class="btn ghost">Agora não</button>
+    </div>
+    <div class="row">
+      <button class="btn danger sm">Excluir conta</button>
+      <button class="btn primary sm" aria-busy="true"><span class="spin" aria-hidden="true"></span>Enviando</button>
+      <button class="btn primary sm" disabled>Desabilitado</button>
+    </div>
+    <button class="btn primary lg">Continuar</button>
+  </div>
+
+  <h2 class="sec">Culturas e filtros</h2>
+  <div class="panel stack">
+    <div class="cropgrid" role="group" aria-label="Minhas culturas">
+      <button class="crop" aria-pressed="true"><svg class="i"><use href="#leaf"/></svg>Soja</button>
+      <button class="crop" aria-pressed="false"><svg class="i"><use href="#sprout"/></svg>Milho</button>
+      <button class="crop" aria-pressed="false"><svg class="i"><use href="#sprout"/></svg>Trigo</button>
+    </div>
+    <div class="row" role="radiogroup" aria-label="Tipo de problema">
+      <button class="chip pill" role="radio" aria-checked="true">Todos</button>
+      <button class="chip pill" role="radio" aria-checked="false">Fungo</button>
+      <button class="chip pill" role="radio" aria-checked="false">Inseto</button>
+      <button class="chip pill" role="radio" aria-checked="false">Bactéria</button>
+    </div>
+    <div class="row">
+      <span class="badge a-fungo">Fungo</span><span class="badge a-inseto">Inseto</span><span class="badge a-bacteria">Bactéria</span><span class="badge a-virus">Vírus</span>
+      <span class="badge a-acaro">Ácaro</span><span class="badge a-nematoide">Nematoide</span><span class="badge a-deficiencia">Deficiência</span><span class="badge a-outro">Outro</span>
+    </div>
+  </div>
+
+  <h2 class="sec">Resultado do diagnóstico (S06/S07)</h2>
+  <div class="panel">
+    <div class="car">
+      <div class="photo" role="img" aria-label="Sua foto"></div>
+      <div class="photo ex" role="img" aria-label="Exemplo do problema"></div>
+    </div>
+    <div class="dots"><button aria-label="Foto 1 de 3" aria-current="true"></button><button aria-label="Foto 2 de 3"></button><button aria-label="Foto 3 de 3"></button></div>
+    <p class="conf">Muito provável · 82%</p>
+    <div class="rname">Ferrugem asiática</div>
+    <div class="row" style="margin-top:4px"><span class="sci">Phakopsora pachyrhizi</span><span class="badge a-fungo">Fungo</span></div>
+    <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.82" aria-label="Probabilidade 82%"><i style="width:82%"></i></div>
+    <div class="acc" style="margin-top:var(--space-4)">
+      <details open><summary><svg class="i"><use href="#sprout"/></svg>Controle cultural<svg class="i chev"><use href="#chev"/></svg></summary>
+        <div class="body">Texto próprio escrito pela equipe de Agronomia, com base em fontes abertas.</div></details>
+      <details><summary><svg class="i"><use href="#bug"/></svg>Controle biológico<svg class="i chev"><use href="#chev"/></svg></summary><div class="body">…</div></details>
+      <details><summary><svg class="i"><use href="#flask"/></svg>Controle químico<svg class="i chev"><use href="#chev"/></svg></summary><div class="body">…</div></details>
+      <details><summary><svg class="i"><use href="#shield"/></svg>Prevenção<svg class="i chev"><use href="#chev"/></svg></summary><div class="body">…</div></details>
+    </div>
+    <p class="note">Aplicação de defensivo exige receituário agronômico.</p>
+  </div>
+
+  <div class="panel empty unid" style="margin-top:var(--space-3)">
+    <div class="circ"><svg class="i"><use href="#scan"/></svg></div>
+    <b>Não conseguimos identificar</b>
+    <p>A foto ficou escura ou de longe.</p>
+    <ul><li>Uma folha só, bem de perto</li><li>Luz do dia, sem sombra em cima</li><li>Mostre o lado com a mancha</li></ul>
+    <div class="row" style="justify-content:center"><button class="btn primary">Tirar outra foto</button><button class="btn secondary">Perguntar à comunidade</button></div>
+  </div>
+
+  <h2 class="sec">Cards de problema (S09)</h2>
+  <div class="panel stack" style="padding:var(--space-2)">
+    <a class="pcard" href="#"><span class="thumb"></span><span><b>Ferrugem asiática</b><span class="sci">Phakopsora pachyrhizi</span><span class="meta"><span class="badge a-fungo">Fungo</span></span></span></a>
+    <a class="pcard" href="#"><span class="thumb b"></span><span><b>Percevejo-marrom</b><span class="sci">Euschistus heros</span><span class="meta"><span class="badge a-inseto">Inseto</span></span></span></a>
+    <div class="pcard" aria-hidden="true"><span class="thumb" style="background:var(--color-surface-sunken)"></span><span style="flex:1;display:grid;gap:8px"><span class="skel" style="width:60%"></span><span class="skel" style="width:40%"></span></span></div>
+  </div>
+
+  <h2 class="sec">Alertas (S13)</h2>
+  <div class="panel" style="padding:0;overflow:hidden">
+    <a class="alert unread" href="#"><span class="ic"><svg class="i"><use href="#alert"/></svg></span><span class="tx"><b>Ferrugem asiática</b><span>Risco alto em Cascavel: 5 dias de chuva e 22 °C</span></span><time>há 2 h</time></a>
+    <a class="alert" href="#"><span class="ic med"><svg class="i"><use href="#alert"/></svg></span><span class="tx"><b>Percevejo-marrom</b><span>Risco médio: 3 casos confirmados na região</span></span><time>ontem</time></a>
+  </div>
+  <div class="acard" style="margin-top:var(--space-3)">
+    <h3><svg class="i"><use href="#alert"/></svg>Risco alto na sua região</h3>
+    <p>Chuva prevista para os próximos 5 dias com temperatura favorável à ferrugem. Vale vistoriar o talhão.</p>
+    <div class="mini"><span class="thumb"></span>Ferrugem asiática</div>
+    <div class="row"><button class="btn primary sm">Ver ficha</button><button class="btn ghost sm">Ver clima</button></div>
+  </div>
+
+  <h2 class="sec">Comunidade (S10/S12)</h2>
+  <div class="panel" style="padding:0;overflow:hidden">
+    <div class="post new"><span class="thumb"></span><span><span class="c">Soja · Toledo</span><b style="display:block">Manchas amarelas nas folhas de baixo, é deficiência?</b><span class="m"><span class="nw">1 resposta nova</span><span>há 2 min</span></span></span></div>
+    <div class="post"><span class="thumb b"></span><span><span class="c">Soja · Cascavel</span><b style="display:block">Percevejo na fase R5, já passou do nível?</b><span class="m"><span><svg class="i" style="width:14px;height:14px;vertical-align:-2px"><use href="#msg"/></svg> 3</span><span>há 50 min</span></span></span></div>
+  </div>
+  <div class="panel ans" style="margin-top:var(--space-3)">
+    <span class="av" aria-hidden="true">GM</span>
+    <div><div class="row"><b>Gabriela M.</b><span class="badge expert">Especialista</span></div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:4px 0 var(--space-2)">Pelo padrão parece falta de potássio, começa nas bordas das folhas velhas. Vale uma análise de solo.</p>
+      <div class="row"><button class="useful" aria-pressed="true"><svg class="i" style="width:16px;height:16px"><use href="#thumb"/></svg>4</button><button class="btn ghost sm">Responder</button></div></div>
+  </div>
+
+  <h2 class="sec">Clima e janela de pulverização (S14)</h2>
+  <div class="panel">
+    <table class="wx">
+      <thead><tr><th class="today">Hoje</th><th>Sex</th><th>Sáb</th><th>Dom</th><th>Seg</th></tr></thead>
+      <tbody>
+        <tr><td class="today"><svg class="i"><use href="#rain"/></svg></td><td><svg class="i"><use href="#rain"/></svg></td><td><svg class="i"><use href="#cloudsun"/></svg></td><td><svg class="i"><use href="#sun"/></svg></td><td><svg class="i"><use href="#sun"/></svg></td></tr>
+        <tr><td class="today">18–27°</td><td>19–26°</td><td>17–29°</td><td>18–31°</td><td>20–32°</td></tr>
+        <tr><td class="today rain"><i style="height:22px"></i></td><td class="rain"><i style="height:12px"></i></td><td class="rain"><i style="height:3px"></i></td><td class="rain"></td><td class="rain"></td></tr>
+        <tr><td class="today mm">24 mm</td><td class="mm">8 mm</td><td class="mm">1 mm</td><td class="mm">0 mm</td><td class="mm">0 mm</td></tr>
+        <tr><td class="today no">Evitar</td><td class="no">Evitar</td><td class="ok">Bom</td><td class="ok">Bom</td><td class="no">Vento</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sec">Estádios da soja (S15)</h2>
+  <div class="panel">
+    <ol class="stages">
+      <li class="past"><i></i>VE</li><li class="past"><i></i>V3</li><li class="past"><i></i>R1</li><li aria-current="step"><i></i>R3</li><li><i></i>R5</li><li><i></i>R7</li>
+    </ol>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-3)"><b style="color:var(--color-ink)">68 dias após a semeadura.</b> Monitorar percevejos e ferrugem nesta fase.</p>
+  </div>
+
+  <h2 class="sec">Campos (S11/S16)</h2>
+  <div class="panel stack">
+    <label class="f">Título da pergunta<input class="in" placeholder="Ex.: manchas nas folhas de baixo"><span class="help">Até 140 caracteres</span></label>
+    <label class="f">Área do talhão
+      <span class="unit"><input class="in" inputmode="decimal" value="0" aria-invalid="true" aria-describedby="e1"><select aria-label="Unidade"><option>ha</option><option>alqueire</option><option>m²</option></select></span>
+      <span class="err" id="e1">Informe uma área maior que zero</span></label>
+  </div>
+
+  <h2 class="sec">Estados e avisos</h2>
+  <div class="stack">
+    <div class="offline" role="status"><svg class="i"><use href="#wifi-off"/></svg>Sem internet. A biblioteca funciona; fotos vão pra fila.</div>
+    <div class="toast" role="status"><svg class="i"><use href="#check"/></svg>Pergunta publicada</div>
+    <div class="toast err" role="alert"><svg class="i"><use href="#alert"/></svg>Não deu pra enviar. Tente de novo.</div>
+    <div class="panel empty"><div class="circ"><svg class="i"><use href="#msg"/></svg></div><b>Ninguém perguntou ainda</b><p>Seja o primeiro a perguntar sobre soja por aqui.</p><button class="btn primary">Fazer uma pergunta</button></div>
+  </div>
+</main>
+
+<div class="dock">
+  <div class="dockin">
+    <button class="fab" aria-label="Diagnosticar com foto"><svg class="i"><use href="#camera"/></svg></button>
+    <div class="proc" role="status" aria-live="polite"><span class="thumb"></span>Analisando sua foto…<svg class="i chev"><use href="#chevup"/></svg></div>
+    <nav class="tabs" aria-label="Principal">
+      <a href="#" aria-current="page"><svg class="i"><use href="#house"/></svg>Início</a>
+      <a href="#"><svg class="i"><use href="#users"/></svg>Comunidade<span class="badge-dot">2</span></a>
+      <span></span>
+      <a href="#"><svg class="i"><use href="#book"/></svg>Biblioteca</a>
+      <a href="#"><svg class="i"><use href="#user"/></svg>Perfil</a>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

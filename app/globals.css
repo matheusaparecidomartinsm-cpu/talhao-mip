@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "../replica/design/tailwind.css";
+@import "../replica/design/tokens.css";
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    line-height: var(--leading-md);
+  }
+  :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+  h1, h2, h3 { color: var(--color-ink); }
+  .display { font-family: var(--font-display); font-stretch: 115%; letter-spacing: -0.01em; }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+}
+
+@utility scroll-x { overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; }
+@utility pb-safe { padding-bottom: calc(var(--layout-tab-bar) + 88px + env(safe-area-inset-bottom)); }
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface-sunken), var(--color-bg), var(--color-surface-sunken));
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+/* placeholder de foto: cor vem do dado (hue da ficha) até termos fotos próprias */
+.leaf-ph {
+  background:
+    radial-gradient(circle at 32% 40%, hsl(var(--h) 55% 42%) 0 5%, transparent 6%),
+    radial-gradient(circle at 62% 58%, hsl(var(--h) 55% 38%) 0 4%, transparent 5%),
+    radial-gradient(circle at 46% 72%, hsl(var(--h) 50% 40%) 0 3%, transparent 4%),
+    linear-gradient(135deg, var(--color-accent-bright), var(--color-ink));
+}

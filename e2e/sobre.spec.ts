@@ -1,4 +1,7 @@
 import { test, expect } from "./fixtures";
+import { readFileSync } from "node:fs";
+
+const AVOID: string[] = JSON.parse(readFileSync("replica/brand.json", "utf-8")).avoid;
 
 test("página de apresentação: seções, sem prova inventada, acessível", async ({ page, problems, axe }) => {
   await page.goto("/sobre");
@@ -7,7 +10,7 @@ test("página de apresentação: seções, sem prova inventada, acessível", asy
     await expect(page.getByRole("heading", { name: h, level: 2 })).toBeVisible();
   await expect(page.getByText("em construção")).toBeVisible();   // o que não existe não é prometido
   const body = (await page.locator("body").innerText()).toLowerCase();
-  for (const proibido of ["plantix", "agrio", "estrelas", "downloads", "depoimento", "usuários satisfeitos"]) expect(body).not.toContain(proibido);
+  for (const proibido of [...AVOID.map((a) => a.toLowerCase()), "estrelas", "downloads", "depoimento", "usuários satisfeitos"]) expect(body).not.toContain(proibido);
   await axe();
   await page.setViewportSize({ width: 1440, height: 900 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

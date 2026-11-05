@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ServiceWorker />
         <AuthBootstrap />
         {/* Vercel Web Analytics: sem cookies, sem dado pessoal; só funciona hospedado na Vercel */}
-        <Analytics />
+        {process.env.VERCEL === "1" && <Analytics />}
       </body>
     </html>
   );

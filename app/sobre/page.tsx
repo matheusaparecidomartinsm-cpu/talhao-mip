@@ -8,7 +8,7 @@ import { backendEnabled } from "@/lib/env";
 import { Waitlist } from "./waitlist";
 
 export const metadata: Metadata = {
-  title: "Glyma — foto da folha, resposta franca",
+  title: { absolute: "Glyma — foto da folha, resposta franca" },
   description: "Diagnóstico de pragas e doenças da soja pela foto. Diz quanta certeza tem e, quando não sabe, fala. Grátis, sem anúncio, sem venda de produto.",
   openGraph: { title: "Glyma — foto da folha, resposta franca", description: "Diagnóstico da soja que diz quando não sabe.", locale: "pt_BR", type: "website" },
 };
